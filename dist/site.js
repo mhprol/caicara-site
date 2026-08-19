@@ -13,7 +13,7 @@
   // ── 0. Configuração ──────────────────────────────────────────────────────────
   // O BASE é a URL raiz do repo (sem trailing slash) — onde estão os assets e o
   // bundle do Design System. O atributo data-base do #caicara-page sobrescreve.
-  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.2";
+  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.3";
   var DS_NS = "CaiAraDesignSystem_096654";
 
   // ── 1. Helpers ──────────────────────────────────────────────────────────────
@@ -256,6 +256,31 @@
       { l: "Política de privacidade", h: "/politica-de-privacidade" }
     ]}
   ];
+
+  // Social icons inline (Lucide retirou as marcas do pacote principal em v0.300+).
+  // SVGs oficiais, traço único, cor herdada do pai.
+  var SOCIAL_PATHS = {
+    instagram: '<rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="1.75"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="1.75"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>',
+    linkedin: '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" fill="currentColor"/><circle cx="4" cy="4" r="2" fill="currentColor"/>',
+    youtube: '<path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"/>',
+    facebook: '<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>'
+  };
+  function SocialIcon(props) {
+    var size = props.size || 16;
+    var inner = SOCIAL_PATHS[props.name] || "";
+    return h("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: size, height: size,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: 1.75,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      "aria-hidden": "true",
+      dangerouslySetInnerHTML: { __html: inner }
+    });
+  }
   function WaterlineRule(props) {
     var thickness = props.thickness || 3;
     return h("div", {
@@ -297,20 +322,26 @@
           el("div", {
             style: { display: "flex", gap: "var(--space-3)", marginTop: "var(--space-2)" }
           },
-            ...["instagram", "linkedin", "youtube", "facebook"].map(function (n) {
+            ...[
+              { n: "instagram", href: "https://instagram.com/caicaramarketing", target: "_blank" },
+              { n: "linkedin", href: "https://linkedin.com/company/caicara-marketing-digital", target: "_blank" },
+              { n: "youtube", href: "https://youtube.com/@caicaramarketing", target: "_blank" },
+              { n: "facebook", href: "https://facebook.com/caicaramarketing", target: "_blank" }
+            ].map(function (s) {
               return h("a", {
-                key: n,
-                href: n === "instagram" ? "https://instagram.com/caicaramarketing" : "#",
-                "aria-label": n,
+                key: s.n,
+                href: s.href,
+                "aria-label": s.n,
                 rel: "noopener noreferrer",
-                target: n === "instagram" ? "_blank" : null,
+                target: s.target,
                 style: {
                   width: 34, height: 34, borderRadius: "50%",
                   border: "1px solid rgba(253,248,242,.22)",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "rgba(253,248,242,.8)"
+                  color: "rgba(253,248,242,.8)",
+                  transition: "var(--transition-color)"
                 }
-              }, h(Icon, { name: n, size: 16 }));
+              }, h(SocialIcon, { name: s.n, size: 16 }));
             })
           )
         ),
@@ -420,7 +451,7 @@
 
     var SERVICES = [
       { icon: "trending-up", title: "Google Ads e Meta Ads", desc: "Campanhas otimizadas para reduzir o custo por lead e levar o anúncio certo para a pessoa certa.", meta: "Relatório mensal · KPIs claros", accent: "magenta" },
-      { icon: "instagram", title: "Gestão de mídias sociais", desc: "Conteúdo com foco em engajamento e construção de comunidade, no seu tom de voz.", meta: "Calendário editorial · 5 linhas", accent: "cyan" },
+      { icon: "at-sign", title: "Gestão de mídias sociais", desc: "Conteúdo com foco em engajamento e construção de comunidade, no seu tom de voz.", meta: "Calendário editorial · 5 linhas", accent: "cyan" },
       { icon: "compass", title: "Branding e identidade", desc: "Posicionamento, identidade visual e narrativa — a marca que sustenta a performance.", meta: "Bússola de posicionamento", accent: "violet" },
       { icon: "workflow", title: "Automações e mensageria", desc: "WhatsApp, Instagram DM, e-mail e SMS conversando no mesmo painel, sem lead esquecido.", meta: "Portal Caiçara", accent: "cyan" },
       { icon: "map-pin", title: "Perfil no Google", desc: "Otimização do Perfil da Empresa para quem busca serviço perto de casa, em Santos e região.", meta: "Busca local · avaliações", accent: "magenta" },
@@ -573,7 +604,7 @@
     ];
     var ALL = [
       { icon: "trending-up", cat: "Performance", title: "Google Ads e Meta Ads", desc: "Estruturação de campanha, criativos e otimização semanal para reduzir o custo por lead.", meta: "Performance", accent: "magenta" },
-      { icon: "instagram", cat: "Conteúdo", title: "Gestão de mídias sociais", desc: "Linha editorial, calendário e produção. As 5 linhas da Caiçara adaptadas ao seu negócio.", meta: "Conteúdo", accent: "cyan" },
+      { icon: "at-sign", cat: "Conteúdo", title: "Gestão de mídias sociais", desc: "Linha editorial, calendário e produção. As 5 linhas da Caiçara adaptadas ao seu negócio.", meta: "Conteúdo", accent: "cyan" },
       { icon: "compass", cat: "Marca", title: "Branding e identidade", desc: "Bússola de posicionamento, arquétipos, tom de voz e identidade visual completa.", meta: "Marca", accent: "violet" },
       { icon: "workflow", cat: "Automação", title: "Automações e mensageria", desc: "Fluxos de resposta, distribuição de leads e follow-up automático em todos os canais.", meta: "Automação", accent: "cyan" },
       { icon: "map-pin", cat: "Performance", title: "Perfil no Google", desc: "Ficha completa, fotos, categorias e gestão de avaliações para busca local.", meta: "Performance", accent: "magenta" },
@@ -902,7 +933,7 @@
       ["message-circle", "WhatsApp", "(13) 97806-2772"],
       ["mail", "E-mail", "contato@caicaramarketing.com.br"],
       ["map-pin", "Onde estamos", "Santos · São Paulo · Brasil"],
-      ["instagram", "Instagram", "@caicaramarketing"]
+      ["at-sign", "Instagram", "@caicaramarketing"]
     ];
     var SERVICOS_OPTS = ["Gestão de mídias sociais", "Google Ads e Meta Ads", "Branding e identidade", "Automações e mensageria", "Perfil no Google", "BOT Criativo", "Ainda não sei"];
 

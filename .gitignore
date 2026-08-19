@@ -29,3 +29,7 @@ npm-debug.log*
 # OG images are generated, not committed in v1.0.0
 # (uncomment the next line if you want to ignore them after generation)
 # og/*.png
+
+# Dev tools (not part of the production repo)
+test-preview.html
+check-icons.mjs
