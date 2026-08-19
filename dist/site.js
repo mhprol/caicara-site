@@ -13,7 +13,7 @@
   // ── 0. Configuração ──────────────────────────────────────────────────────────
   // O BASE é a URL raiz do repo (sem trailing slash) — onde estão os assets e o
   // bundle do Design System. O atributo data-base do #caicara-page sobrescreve.
-  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.3";
+  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.4";
   var DS_NS = "CaiAraDesignSystem_096654";
 
   // ── 1. Helpers ──────────────────────────────────────────────────────────────
@@ -170,8 +170,28 @@
   ];
   function SiteNav(props) {
     var active = props.active, glass = props.glass;
+    var openHook = React.useState(false);
+    var menuOpen = openHook[0], setMenuOpen = openHook[1];
     var hoverRef = React.useRef(null);
     var setHover = function (v) { hoverRef.current = v; };
+
+    // Lock/unlock body scroll quando o menu mobile está aberto
+    React.useEffect(function () {
+      if (menuOpen) {
+        var prev = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        return function () { document.body.style.overflow = prev || ""; };
+      }
+    }, [menuOpen]);
+
+    // Fecha o menu ao trocar de rota (ESC)
+    React.useEffect(function () {
+      if (!menuOpen) return;
+      function onKey(e) { if (e.key === "Escape") setMenuOpen(false); }
+      document.addEventListener("keydown", onKey);
+      return function () { document.removeEventListener("keydown", onKey); };
+    }, [menuOpen]);
+
     // position: fixed (em vez de sticky) — sticky é silenciosamente quebrado
     // pelo GoHighLevel em várias páginas (ancestral com overflow/transform).
     // O body recebe padding-top: 72px nas páginas não-home (via mount()) para
@@ -189,39 +209,43 @@
       borderBottom: "1px solid " + (glass ? "rgba(253,248,242,.18)" : "var(--border-subtle)"),
       fontFamily: "var(--font-sans)"
     };
-    return el("header", { className: "caicara-nav", style: style },
-      h("a", {
-        href: "/",
-        "aria-label": "Caiçara — ir para o início",
-        style: { display: "flex", alignItems: "center", flex: "0 0 auto" }
-      }, h(SiteLogo, { variant: glass ? "horizontal-light" : "horizontal-dark", height: 34 })),
-      el("nav", {
-        "aria-label": "Navegação principal",
-        style: { display: "flex", alignItems: "center", gap: "var(--space-6)", marginLeft: "auto" }
-      },
-        ...NAV_LINKS.map(function (l) {
-          var on = l.value === active;
-          return h("a", {
-            key: l.value,
-            href: l.href,
-            "aria-current": on ? "page" : null,
-            onMouseEnter: function () { setHover(l.value); },
-            onMouseLeave: function () { setHover(null); },
-            style: {
-              fontSize: "var(--fs-sm)",
-              fontWeight: on ? "var(--fw-semibold)" : "var(--fw-medium)",
-              textDecoration: "none",
-              letterSpacing: "var(--ls-tight)",
-              color: "var(--text-heading)",
-              paddingBottom: 2,
-              borderBottom: "2px solid " + (on ? "var(--magenta-500)" : "transparent"),
-              transition: "var(--transition-color)"
-            }
-          }, l.label);
-        }),
+
+    return el(React.Fragment, null,
+      el("header", { className: "caicara-nav", style: style },
+        h("a", {
+          href: "/",
+          "aria-label": "Caiçara — ir para o início",
+          style: { display: "flex", alignItems: "center", flex: "0 0 auto" }
+        }, h(SiteLogo, { variant: glass ? "horizontal-light" : "horizontal-dark", height: 34 })),
+        el("nav", {
+          className: "caicara-nav-links",
+          "aria-label": "Navegação principal",
+          style: { display: "flex", alignItems: "center", gap: "var(--space-6)", marginLeft: "auto" }
+        },
+          ...NAV_LINKS.map(function (l) {
+            var on = l.value === active;
+            return h("a", {
+              key: l.value,
+              href: l.href,
+              "aria-current": on ? "page" : null,
+              onMouseEnter: function () { setHover(l.value); },
+              onMouseLeave: function () { setHover(null); },
+              style: {
+                fontSize: "var(--fs-sm)",
+                fontWeight: on ? "var(--fw-semibold)" : "var(--fw-medium)",
+                textDecoration: "none",
+                letterSpacing: "var(--ls-tight)",
+                color: "var(--text-heading)",
+                paddingBottom: 2,
+                borderBottom: "2px solid " + (on ? "var(--magenta-500)" : "transparent"),
+                transition: "var(--transition-color)"
+              }
+            }, l.label);
+          })
+        ),
         h("a", {
           href: "/contato",
-          className: "caicara-cta",
+          className: "caicara-cta caicara-nav-cta",
           style: {
             display: "inline-flex", alignItems: "center", justifyContent: "center",
             height: 40, padding: "0 var(--space-5)",
@@ -232,7 +256,78 @@
             boxShadow: "var(--shadow-sm)",
             transition: "var(--transition-color)"
           }
-        }, "Falar com a gente")
+        }, "Falar com a gente"),
+        h("button", {
+          type: "button",
+          className: "caicara-nav-burger",
+          "aria-label": menuOpen ? "Fechar menu" : "Abrir menu",
+          "aria-expanded": menuOpen ? "true" : "false",
+          "aria-controls": "caicara-mobile-menu",
+          onClick: function () { setMenuOpen(!menuOpen); },
+          style: {
+            color: glass ? "var(--sand-500)" : "var(--text-heading)",
+            marginLeft: "auto"
+          }
+        }, h(Icon, { name: menuOpen ? "x" : "menu", size: 24 }))
+      ),
+
+      // Mobile menu overlay
+      h("div", {
+        id: "caicara-mobile-menu",
+        className: "caicara-mobile-menu",
+        "data-open": menuOpen ? "true" : "false",
+        "aria-hidden": menuOpen ? null : "true",
+        role: "dialog",
+        "aria-label": "Menu de navegação"
+      },
+        el("div", { className: "caicara-mobile-menu-header" },
+          h("a", {
+            href: "/",
+            "aria-label": "Caiçara — ir para o início",
+            onClick: function () { setMenuOpen(false); },
+            style: { display: "flex", alignItems: "center", flex: "0 0 auto" }
+          }, h(SiteLogo, { variant: "horizontal-light", height: 32 })),
+          h("button", {
+            type: "button",
+            className: "caicara-nav-burger",
+            "aria-label": "Fechar menu",
+            onClick: function () { setMenuOpen(false); },
+            style: { color: "var(--sand-500)" }
+          }, h(Icon, { name: "x", size: 24 }))
+        ),
+        h("ul", { className: "caicara-mobile-menu-list" },
+          ...NAV_LINKS.map(function (l) {
+            var on = l.value === active;
+            return h("li", { key: l.value },
+              h("a", {
+                href: l.href,
+                "aria-current": on ? "page" : null,
+                onClick: function () { setMenuOpen(false); }
+              }, l.label,
+                on ? h("span", { style: { color: "var(--cyan-300)", fontSize: "var(--fs-base)", fontFamily: "var(--font-mono)", marginLeft: "auto" } }, "agora") : null
+              )
+            );
+          })
+        ),
+        h("a", {
+          href: "/contato",
+          className: "caicara-mobile-menu-cta",
+          onClick: function () { setMenuOpen(false); }
+        }, "Falar com a gente →"),
+        el("div", {
+          style: {
+            marginTop: "auto",
+            paddingTop: "var(--space-8)",
+            fontFamily: "var(--font-mono)",
+            fontSize: "var(--fs-caption)",
+            color: "rgba(253,248,242,.5)",
+            display: "flex", flexDirection: "column", gap: "var(--space-2)"
+          }
+        },
+          h("span", null, "(13) 97806-2772"),
+          h("span", null, "contato@caicaramarketing.com.br"),
+          h("span", null, "Santos, SP")
+        )
       )
     );
   }
@@ -470,20 +565,22 @@
     ];
 
     return el(React.Fragment, null,
-      h(PhotoHero, {
-        imageSrc: asset("assets/photography/farol-ao-por-do-sol.webp"),
-        overline: "Santos · SP · Brasil",
-        title: "Seu porto seguro no",
-        emphasis: "marketing digital",
-        lead: "Estratégias personalizadas e amparadas em IA para PMEs que querem crescer no litoral — e além. Branding e performance no mesmo plano.",
-        actions: el(React.Fragment, null,
-          h(Button, { size: "lg", onClick: function () { navigateToPage("contato"); } }, "Agendar diagnóstico"),
-          h(Button, { size: "lg", variant: "outline", onClick: function () { navigateToPage("cases"); } }, "Ver cases")
-        )
-      }),
+      el("div", { className: "caicara-hero-wrap" },
+        h(PhotoHero, {
+          imageSrc: asset("assets/photography/farol-ao-por-do-sol.webp"),
+          overline: "Santos · SP · Brasil",
+          title: "Seu porto seguro no",
+          emphasis: "marketing digital",
+          lead: "Estratégias personalizadas e amparadas em IA para PMEs que querem crescer no litoral — e além. Branding e performance no mesmo plano.",
+          actions: el(React.Fragment, null,
+            h(Button, { size: "lg", onClick: function () { navigateToPage("contato"); } }, "Agendar diagnóstico"),
+            h(Button, { size: "lg", variant: "outline", onClick: function () { navigateToPage("cases"); } }, "Ver cases")
+          )
+        })
+      ),
 
       h(Section, { style: { padding: "var(--space-16) 0" } },
-        el("div", { style: { display: "flex", gap: "var(--space-12)", flexWrap: "wrap", justifyContent: "space-between" } },
+        el("div", { className: "caicara-grid-stats", style: { display: "flex", gap: "var(--space-12)", flexWrap: "wrap", justifyContent: "space-between" } },
           h(StatBlock, { value: "+30%", label: "em vendas", note: "em 3 meses · varejo local" }),
           h(StatBlock, { accent: "cyan", value: "1.000+", label: "leads qualificados", note: "em uma única campanha" }),
           h(StatBlock, { accent: "violet", value: "4", label: "etapas do método PEMD", note: "do diagnóstico ao destino" }),
@@ -496,6 +593,7 @@
           h(SectionHeading, { overline: "Serviços", title: "Tudo que o seu negócio precisa para", emphasis: "navegar longe",
             lead: "Marca sem resultado é enfeite. Resultado sem marca não se sustenta. Aqui os dois andam juntos." }),
           el("div", {
+            className: "caicara-grid-3",
             style: {
               display: "grid", gridTemplateColumns: "repeat(3, 1fr)",
               gap: "var(--space-6)", marginTop: "var(--space-12)"
@@ -514,7 +612,7 @@
       ),
 
       h(Section, null,
-        el("div", { style: { display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: "var(--space-16)", alignItems: "center" } },
+        el("div", { className: "caicara-grid-2-asym", style: { display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: "var(--space-16)", alignItems: "center" } },
           el("div", { style: { position: "relative" } },
             h("img", {
               src: asset("assets/photography/bussola.webp"),
@@ -560,6 +658,7 @@
         el(React.Fragment, null,
           h(SectionHeading, { overline: "Histórias à beira-mar", title: "Quem já içou as velas com a gente", align: "center" }),
           el("div", {
+            className: "caicara-grid-testimonials",
             style: {
               display: "grid", gridTemplateColumns: "repeat(3, 1fr)",
               gap: "var(--space-6)", marginTop: "var(--space-12)", alignItems: "stretch"
@@ -625,6 +724,7 @@
       h(Section, { style: { paddingBottom: "var(--section-y)" } },
         h(Tabs, { items: ["Todos", "Performance", "Conteúdo", "Marca", "Automação"], value: tab, onChange: setTab }),
         el("div", {
+          className: "caicara-grid-tabs",
           style: {
             display: "grid", gridTemplateColumns: "repeat(3, 1fr)",
             gap: "var(--space-6)", marginTop: "var(--space-8)"
@@ -644,6 +744,7 @@
           h(SectionHeading, { align: "center", overline: "Pacotes", title: "Três embarcações, o mesmo destino",
             lead: "Comece pelo que cabe agora. Trocar de pacote é conversa, não contrato novo." }),
           el("div", {
+            className: "caicara-grid-packs",
             style: {
               display: "grid", gridTemplateColumns: "repeat(3, 1fr)",
               gap: "var(--space-6)", marginTop: "var(--space-12)", alignItems: "stretch"
@@ -777,6 +878,7 @@
                   }, s.d) : null
                 ),
                 on ? h("img", {
+                  className: "caicara-metodo-photo",
                   src: asset(s.img), alt: "",
                   style: { flex: "0 0 200px", width: 200, objectFit: "cover", display: "block" }
                 }) : null
@@ -790,6 +892,7 @@
           h(SectionHeading, { overline: "Para quem", title: "Três tripulações, um litoral",
             lead: "A Caiçara nasceu para PMEs de Santos e da Baixada. Se você se reconhece em uma destas descrições, a conversa vai render." }),
           el("div", {
+            className: "caicara-grid-pessoas",
             style: {
               display: "grid", gridTemplateColumns: "repeat(3, 1fr)",
               gap: "var(--space-6)", marginTop: "var(--space-12)"
@@ -871,8 +974,8 @@
         el("div", { style: { display: "flex", flexDirection: "column", gap: "var(--space-6)", marginTop: "var(--space-8)" } },
           ...shown.map(function (c) {
             return h(Card, { key: c.cliente, padding: "0", interactive: true, style: { overflow: "hidden" } },
-              el("div", { style: { display: "grid", gridTemplateColumns: "320px 1fr", alignItems: "stretch" } },
-                h("img", { src: asset(c.img), alt: "", style: { width: "100%", height: "100%", minHeight: 220, objectFit: "cover", display: "block" } }),
+              el("div", { className: "caicara-cases-inner", style: { display: "grid", gridTemplateColumns: "320px 1fr", alignItems: "stretch" } },
+                h("img", { className: "caicara-cases-img", src: asset(c.img), alt: "", style: { width: "100%", height: "100%", minHeight: 220, objectFit: "cover", display: "block" } }),
                 el("div", { style: { padding: "var(--space-8)", display: "flex", flexDirection: "column", gap: "var(--space-3)" } },
                   el("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-3)" } },
                     h("span", { style: { fontSize: "var(--fs-overline)", fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase", color: "var(--text-accent)" } }, c.cliente),
@@ -938,8 +1041,8 @@
     var SERVICOS_OPTS = ["Gestão de mídias sociais", "Google Ads e Meta Ads", "Branding e identidade", "Automações e mensageria", "Perfil no Google", "BOT Criativo", "Ainda não sei"];
 
     return el("div", { style: { maxWidth: "var(--container-max)", margin: "0 auto", padding: "var(--space-20) var(--container-gutter) 0" } },
-      el("div", { style: { display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: "var(--space-16)", alignItems: "start" } },
-        el("div", null,
+      el("div", { className: "caicara-grid-contact", style: { display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: "var(--space-16)", alignItems: "start" } },
+        el("div", { className: "caicara-contact-info" },
           h(SectionHeading, { overline: "Contato", title: "Vamos conversar sobre", emphasis: "a sua rota",
             lead: "Conte onde você está e onde quer chegar. A gente responde em até um dia útil — sempre uma pessoa, nunca um robô." }),
           el("div", { style: { display: "flex", flexDirection: "column", gap: "var(--space-5)", marginTop: "var(--space-10)" } },
@@ -969,7 +1072,7 @@
             }
           })
         ),
-        h(Card, { padding: "0", style: { overflow: "hidden" } },
+        h(Card, { className: "caicara-contact-form-card", padding: "0", style: { overflow: "hidden" } },
           h(WaterlineRule, null),
           el("div", { style: { padding: "var(--space-8)", display: "flex", flexDirection: "column", gap: "var(--space-5)" } },
             sent ? el(React.Fragment, null,
@@ -980,7 +1083,7 @@
                 h("h3", { style: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--fs-3xl)", fontWeight: "var(--fw-bold)", color: "var(--text-heading)", letterSpacing: "var(--ls-tight)" } }, "Traçar a rota"),
                 h("p", { style: { margin: "var(--space-2) 0 0", fontSize: "var(--fs-sm)", color: "var(--text-body)" } }, "Leva dois minutos. Sem campo obrigatório inútil.")
               ),
-              el("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" } },
+              el("div", { className: "caicara-contact-form-grid", style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" } },
                 h(Input, { label: "Seu nome", placeholder: "Como podemos te chamar?", value: form.nome, onChange: set("nome") }),
                 h(Input, { label: "Empresa", placeholder: "Nome do negócio", value: form.empresa, onChange: set("empresa") }),
                 h(Input, { label: "E-mail", placeholder: "voce@empresa.com.br", value: form.email, onChange: set("email"), type: "email" }),
@@ -1020,6 +1123,7 @@
     return el(React.Fragment, null,
       // Hero
       el("div", {
+        className: "caicara-sobre-hero",
         style: {
           background: "var(--gradient-deep)", color: "var(--sand-500)",
           padding: "var(--space-32) var(--container-gutter) var(--space-24)",
@@ -1047,7 +1151,7 @@
 
       // Propósito
       h(Section, null,
-        el("div", { style: { display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: "var(--space-16)", alignItems: "center" } },
+        el("div", { className: "caicara-grid-2-asym", style: { display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: "var(--space-16)", alignItems: "center" } },
           el("div", null,
             h(SectionHeading, {
               overline: "Propósito",
@@ -1074,6 +1178,7 @@
         el(React.Fragment, null,
           h(SectionHeading, { align: "center", overline: "Valores", title: "O que nos guia", emphasis: "em cada rota" }),
           el("div", {
+            className: "caicara-grid-valores",
             style: {
               display: "grid", gridTemplateColumns: "repeat(2, 1fr)",
               gap: "var(--space-6)", marginTop: "var(--space-12)"
@@ -1104,6 +1209,7 @@
         el(React.Fragment, null,
           h(SectionHeading, { overline: "Tripulação", title: "Pequena tripulação,", emphasis: "vento a favor" }),
           el("div", {
+            className: "caicara-grid-2cards",
             style: {
               display: "grid", gridTemplateColumns: "repeat(2, 1fr)",
               gap: "var(--space-6)", marginTop: "var(--space-12)"
@@ -1112,6 +1218,7 @@
             ...PESSOAS.map(function (p) {
               return h(Card, { key: p.nome, padding: "0", style: { overflow: "hidden" } },
                 el("div", {
+                  className: "caicara-trips-inner",
                   style: {
                     display: "grid",
                     gridTemplateColumns: "minmax(0, 220px) minmax(0, 1fr)",
@@ -1121,6 +1228,7 @@
                   }
                 },
                   el("div", {
+                    className: "caicara-trips-photo",
                     style: {
                       width: "100%", height: "100%",
                       background: "var(--sand-100)",
@@ -1268,7 +1376,7 @@
           lineHeight: "var(--lh-body)", color: "var(--text-body)"
         }
       }, "A página que você procura não está em nenhum porto nosso. Mas a tripulação está de plantão — vamos voltar pro convés?"),
-      el("div", { style: { display: "flex", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)", flexWrap: "wrap" } },
+      el("div", { className: "caicara-404-buttons", style: { display: "flex", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)", flexWrap: "wrap" } },
         h("a", {
           href: "/",
           style: {

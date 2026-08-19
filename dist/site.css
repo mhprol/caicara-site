@@ -366,10 +366,198 @@ img, svg, video { max-width: 100%; display: block; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
 
-/* ── Responsive nudges ───────────────────────────────────────────────────────── */
+/* ── Responsive ────────────────────────────────────────────────────────────────
+   Estratégia: tokens customizáveis em :root para herdar nos inline styles
+   dos componentes React. Helpers `.caicara-grid-N` que stackam em mobile.
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+/* Tablet — começa a comprimir */
 @media (max-width: 960px) {
-  :root { --container-gutter: var(--space-4); --section-y: var(--space-16); }
+  :root {
+    --container-gutter: var(--space-4);
+    --section-y: var(--space-16);
+    --fs-7xl: 3.5rem;
+    --fs-6xl: 2.75rem;
+    --fs-5xl: 2.125rem;
+    --fs-4xl: 1.75rem;
+  }
 }
-@media (max-width: 640px) {
-  :root { --fs-7xl: 2.75rem; --fs-6xl: 2.25rem; --fs-5xl: 1.875rem; }
+
+/* Mobile — apertado mas respirável */
+@media (max-width: 768px) {
+  :root {
+    --container-gutter: var(--space-4);
+    --section-y: var(--space-12);
+    --section-y-tight: var(--space-10);
+    --space-32: 4rem;
+    --space-24: 3rem;
+    --space-20: 2.5rem;
+    --fs-7xl: 2.5rem;
+    --fs-6xl: 2rem;
+    --fs-5xl: 1.75rem;
+    --fs-4xl: 1.5rem;
+    --fs-3xl: 1.375rem;
+  }
+
+  /* ── Helper grids — todas stackam em 1 coluna no mobile ──────────── */
+  .caicara-grid-3,
+  .caicara-grid-2,
+  .caicara-grid-2-asym,
+  .caicara-grid-3-1,
+  .caicara-grid-200-1,
+  .caicara-grid-2cards,
+  .caicara-grid-stats,
+  .caicara-grid-trips,
+  .caicara-grid-pessoas,
+  .caicara-grid-valores,
+  .caicara-grid-tabs,
+  .caicara-grid-packs,
+  .caicara-grid-testimonials,
+  .caicara-grid-cases,
+  .caicara-grid-contact {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-4) !important;
+  }
+  .caicara-grid-stats > * { min-width: 0 !important; flex: 1 1 calc(50% - var(--space-3)) !important; }
+
+  /* ── Hero PhotoHero — limita altura em mobile ─────────────────────── */
+  .caicara-hero-wrap > section,
+  .caicara-hero-wrap > div,
+  .caicara-hero-wrap {
+    min-height: 60vh !important;
+    max-height: 80vh !important;
+  }
+
+  /* ── Sobre Hero custom ─────────────────────────────────────────────── */
+  .caicara-sobre-hero {
+    padding: var(--space-20) var(--container-gutter) var(--space-12) !important;
+  }
+
+  /* ── Metodo acordeão — esconde coluna da foto ──────────────────────── */
+  .caicara-metodo-photo { display: none !important; }
+  .caicara-metodo-num { flex: 0 0 56px !important; width: 56px !important; }
+
+  /* ── Tripulação: foto em cima, texto embaixo ──────────────────────── */
+  .caicara-trips-inner { grid-template-columns: 1fr !important; max-height: none !important; }
+  .caicara-trips-photo { height: 200px !important; min-height: 0 !important; }
+  .caicara-trips-photo img { object-position: center 25% !important; }
+
+  /* ── Cases: imagem em cima, conteúdo embaixo ──────────────────────── */
+  .caicara-cases-inner { grid-template-columns: 1fr !important; }
+  .caicara-cases-inner > img { min-height: 180px !important; height: 180px !important; }
+
+  /* ── Contato: imagem escondida (info importante) ──────────────────── */
+  .caicara-contact-info { order: 2; }
+  .caicara-contact-form-card { order: 1; }
+  .caicara-contact-info img { display: none !important; }
+  .caicara-contact-form-grid { grid-template-columns: 1fr !important; }
+
+  /* ── Navbar: hamburger visível, links escondidos ──────────────────── */
+  .caicara-nav-links { display: none !important; }
+  .caicara-nav-cta { display: none !important; }
+  .caicara-nav-burger { display: inline-flex !important; }
+
+  /* ── Navbar link ativo: underline menor ────────────────────────────── */
+  .caicara-nav a[aria-current="page"] {
+    border-bottom-width: 1px !important;
+  }
+
+  /* ── 404: empilha botões ──────────────────────────────────────────── */
+  .caicara-404-buttons { flex-direction: column !important; align-items: stretch !important; }
+  .caicara-404-buttons a { width: 100% !important; }
+
+  /* ── Testimonials: empilhado (DS já tem stack mas reforça) ─────────── */
+  .caicara-grid-testimonials > * { min-width: 0 !important; }
+
+  /* ── ServiceCard / Card: largura cheia ────────────────────────────── */
+  .caicara-grid-3 > *,
+  .caicara-grid-2 > *,
+  .caicara-grid-200-1 > *,
+  .caicara-grid-2cards > *,
+  .caicara-grid-packs > *,
+  .caicara-grid-tabs > * { min-width: 0 !important; max-width: 100% !important; }
+
+  /* ── Pequenos ajustes de tipografia ───────────────────────────────── */
+  h1 { letter-spacing: var(--ls-tighter) !important; }
+  .caicara-section-heading h2,
+  h2 { font-size: var(--fs-3xl) !important; }
+
+  /* ── Padding interno das Section (caso SectionHelper use classe) ─── */
+  .caicara-section { padding: var(--section-y) 0 !important; }
+
+  /* ── Mobile menu overlay (estado hidden por padrão) ───────────────── */
+  .caicara-mobile-menu { display: none; }
+  .caicara-mobile-menu[data-open="true"] { display: flex !important; }
 }
+
+/* Celular pequeno — afina mais */
+@media (max-width: 420px) {
+  :root {
+    --fs-7xl: 2.125rem;
+    --fs-6xl: 1.75rem;
+    --fs-5xl: 1.5rem;
+    --container-gutter: var(--space-3);
+  }
+  .caicara-grid-stats > * { flex: 1 1 100% !important; }
+}
+
+/* ── Mobile menu overlay (compartilhado entre breakpoints) ──────────────── */
+.caicara-mobile-menu {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 100;
+  background: var(--gradient-deep);
+  color: var(--sand-500);
+  flex-direction: column;
+  padding: var(--space-6) var(--container-gutter) var(--space-12);
+  overflow-y: auto;
+}
+.caicara-mobile-menu-header {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+  margin-bottom: var(--space-8);
+}
+.caicara-mobile-menu-list {
+  display: flex; flex-direction: column;
+  gap: var(--space-2);
+  list-style: none; padding: 0; margin: 0 0 var(--space-8) 0;
+}
+.caicara-mobile-menu-list a {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-4) 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  color: var(--sand-500);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(253, 248, 242, 0.12);
+}
+.caicara-mobile-menu-list a[aria-current="page"] { color: var(--cyan-300); }
+.caicara-mobile-menu-list a:hover { color: var(--cyan-300); }
+.caicara-mobile-menu-cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 56px; padding: 0 var(--space-6);
+  background: var(--magenta-500); color: var(--white);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  letter-spacing: var(--ls-tight);
+  box-shadow: var(--shadow-magenta);
+}
+.caicara-mobile-menu-cta:hover { background: var(--magenta-600); color: var(--white); }
+
+/* Hamburger button (sempre presente no DOM, mas hidden em desktop) */
+.caicara-nav-burger {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  background: transparent; border: 0;
+  border-radius: var(--radius-md);
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.caicara-nav-burger:hover { background: rgba(0,0,0,0.06); }
+.on-deep .caicara-nav-burger:hover { background: rgba(255,255,255,0.1); }
