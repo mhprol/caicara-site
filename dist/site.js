@@ -5,7 +5,7 @@
    Lucide (window.lucide) carregados externamente.
 
    Source: https://github.com/mhprol/caicara-site
-   Versão: 1.0.0
+   Versão: 1.0.6
    ─────────────────────────────────────────────────────────────────────────────── */
 (function () {
   "use strict";
@@ -13,7 +13,7 @@
   // ── 0. Configuração ──────────────────────────────────────────────────────────
   // O BASE é a URL raiz do repo (sem trailing slash) — onde estão os assets e o
   // bundle do Design System. O atributo data-base do #caicara-page sobrescreve.
-  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.5";
+  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.6";
   var DS_NS = "CaiAraDesignSystem_096654";
 
   // ── 1. Helpers ──────────────────────────────────────────────────────────────
@@ -295,7 +295,7 @@
           "aria-controls": "caicara-mobile-menu",
           onClick: function () { setMenuOpen(!menuOpen); },
           style: {
-            color: glass ? "var(--sand-500)" : "var(--text-heading)",
+            color: "var(--magenta-500)",
             marginLeft: "auto"
           }
         }, h(BurgerIcon, { open: menuOpen }))
@@ -438,7 +438,7 @@
         }
       },
         el("div", { style: { display: "flex", flexDirection: "column", gap: "var(--space-4)" } },
-          h(SiteLogo, { variant: "horizontal-light", height: 32 }),
+          h(SiteLogo, { variant: "horizontal-light", height: 40 }),
           h("p", {
             style: {
               margin: 0, fontSize: "var(--fs-sm)", lineHeight: "var(--lh-body)",
@@ -507,7 +507,7 @@
           color: "rgba(253,248,242,.55)"
         }
       },
-        h("span", null, "caicaramarketing.com.br · (13) 97806-2772 · Santos, SP"),
+        h("span", { style: { wordBreak: "break-word", overflowWrap: "anywhere" } }, "caicaramarketing.com.br · (13) 97806-2772 · Santos, SP"),
         h("span", null, "© 2026 Caiçara Marketing Digital Estratégico")
       )
     );
@@ -1481,7 +1481,7 @@
       // 1) Nav
       try {
         if (navHost) {
-          var glass = pageKey === "home";
+          var glass = true;
           ReactDOM.createRoot(navHost).render(
             h(SiteNav, { active: entry.navActive, glass: glass })
           );

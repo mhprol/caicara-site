@@ -1,6 +1,6 @@
 # Caiçara · Site institucional — Handoff
 
-> Documento de continuação entre sessões. Última atualização: **v1.0.5** (19/08/2026).
+> Documento de continuação entre sessões. Última atualização: **v1.0.6** (19/08/2026).
 > A próxima sessão deve ler este arquivo inteiro antes de tocar em qualquer coisa.
 
 ---
@@ -9,16 +9,16 @@
 
 | Componente | Estado | Versão |
 |---|---|---|
-| Repo `mhprol/caicara-site` | público, tags `v1.0.0`..`v1.0.5` | v1.0.5 ✓ |
-| `dist/site.js` (React app) | production-ready, ~70KB | v1.0.5 |
-| `dist/site.css` (tokens + reset + media queries) | production-ready, ~22KB | v1.0.5 |
-| `dist/ds-bundle.js` (Design System) | verbatim copy, 185KB | v1.0.5 |
-| `og/*.png` (8 imagens 1200×630) | commitadas, 100–250KB cada | v1.0.5 |
-| `llms.txt`, `robots.txt`, `sitemap.xml` | commitados | v1.0.5 |
-| GHL staging `staging.caicaramarketing.com.br` | **parcialmente em v1.0.5** — ver §4 | misto |
+| Repo `mhprol/caicara-site` | público, tags `v1.0.0`..`v1.0.6` | v1.0.6 ✓ |
+| `dist/site.js` (React app) | production-ready, ~70KB | v1.0.6 |
+| `dist/site.css` (tokens + reset + media queries) | production-ready, ~22KB | v1.0.6 |
+| `dist/ds-bundle.js` (Design System) | verbatim copy, 185KB | v1.0.6 |
+| `og/*.png` (8 imagens 1200×630) | commitadas, 100–250KB cada | v1.0.6 |
+| `llms.txt`, `robots.txt`, `sitemap.xml` | commitados | v1.0.6 |
+| GHL staging `staging.caicaramarketing.com.br` | **em v1.0.5** — atualizar pra v1.0.6 (ver §4) | v1.0.5 |
 | GHL produção `caicaramarketing.com.br` | **não deployado** | — |
 
-**Última sessão**: layout mobile overhaul + bugfixes do menu desktop vazao / hamburger invisível / footer grid não stackava / BODY files desatualizados.
+**Última sessão**: 4 fixes (navbar glass sempre, hamburger magenta, footer overflow, logo footer 40px) — bump pra v1.0.6.
 
 ---
 
@@ -87,35 +87,33 @@ Páginas: `home`, `servicos`, `metodo`, `cases`, `sobre`, `contato`, `politica-d
 
 ## 4. Ações pendentes no GHL (staging)
 
-A **staging estava com 3 versões misturadas** (v1.0.0 body + v1.0.1 site.js + v1.0.4 page header). Provavelmente Matheus atualizou só o page-wide HEADER na primeira passada.
+**Verificado em 19/08/2026** (sessão v1.0.6): as 8 páginas do staging retornam `caicara-site@v1.0.5` corretamente. Pendente: atualizar pra v1.0.6.
 
-### Pra staging ficar 100% em v1.0.5
+### Pra staging ficar 100% em v1.0.6
 
 1. **Site-wide HEADER** — Settings → Custom Code → Header Code:
    - Apaga o que tá lá
-   - Cola: https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.5/ghl/_site-wide-HEADER.html
+   - Cola: https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.6/ghl/_site-wide-HEADER.html
 
 2. **Body block de cada uma das 8 páginas** — Page → Custom Code → Body HTML:
    - Apaga o que tá lá
-   - Cola o arquivo correspondente (v1.0.5):
-     - `home-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.5/ghl/home-BODY.html
-     - `servicos-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.5/ghl/servicos-BODY.html
-     - `metodo-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.5/ghl/metodo-BODY.html
-     - `cases-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.5/ghl/cases-BODY.html
-     - `sobre-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.5/ghl/sobre-BODY.html
-     - `contato-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.5/ghl/contato-BODY.html
-     - `politica-de-privacidade-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.5/ghl/politica-de-privacidade-BODY.html
-     - `404-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.5/ghl/404-BODY.html
+   - Cola o arquivo correspondente (v1.0.6):
+     - `home-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.6/ghl/home-BODY.html
+     - `servicos-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.6/ghl/servicos-BODY.html
+     - `metodo-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.6/ghl/metodo-BODY.html
+     - `cases-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.6/ghl/cases-BODY.html
+     - `sobre-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.6/ghl/sobre-BODY.html
+     - `contato-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.6/ghl/contato-BODY.html
+     - `politica-de-privacidade-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.6/ghl/politica-de-privacidade-BODY.html
+     - `404-BODY.html` https://raw.githubusercontent.com/mhprol/caicara-site/v1.0.6/ghl/404-BODY.html
 
-3. **Page-wide HEADER e FOOTER** — esses já estavam em v1.0.4 e foram re-bumpados pra v1.0.5 no repo. **Vale re-colar** se quiser garantia.
+3. **Page-wide HEADER e FOOTER** — também estão em v1.0.6 no repo. **Vale re-colar** se quiser garantia.
 
-4. **Hard refresh** (Ctrl+Shift+R) + DevTools Network + filtro `caicara-site` → tudo tem que apontar pra `v1.0.5`.
+4. **Hard refresh** (Ctrl+Shift+R) + DevTools Network + filtro `caicara-site` → tudo tem que apontar pra `v1.0.6`.
 
-### Script de verificação (pronto, dev tool)
+### Script de verificação (dev tool, não commitado)
 
-`node scripts/check-staging.mjs` (no repo, versionado). Ele faz GET em cada uma das 8 URLs e mostra exatamente quais caicara-site@V... estão sendo carregadas. Se aparecer v1.0.0/v1.0.1/v1.0.4 em algum slot, esse bloco precisa update.
-
-**Não** está commitado ainda — Matheus tem o `check-staging.mjs` local mas não no GitHub. Se quiser, próxima sessão commita ele.
+Verificação manual (loop PowerShell de 8 GETs) foi feita na sessão v1.0.6 — staging estava 100% v1.0.5. Vale criar `scripts/check-staging.mjs` no repo pra automatizar; Matheus tem o script local.
 
 ---
 
@@ -231,6 +229,7 @@ git push origin main --tags
 | v1.0.3 | Social icons SVG inline (Lucide removeu marcas), "instagram" → "at-sign" |
 | v1.0.4 | Mobile layout overhaul: hamburger menu, grids stack, typography scaled |
 | v1.0.5 | Fix bug: mobile menu vaza no desktop, hamburger invisível, footer grid não stackava, BODY files desatualizados |
+| v1.0.6 | Navbar glass em todas as páginas, hamburger magenta-500, footer overflow fix, logo footer 40px |
 
 ---
 
@@ -412,3 +411,87 @@ node --check dist/site.js
 ---
 
 _Fim do handoff v1.0.5. Próxima sessão: ler §11, implementar 11.1+11.2 (juntos) e 11.3+11.4, deploy v1.0.6._
+
+---
+
+## 12. v1.0.6 release notes (19/08/2026)
+
+4 fixes implementados e deployados. Sessão rápida (~30 min de código + 15 min de validação + 10 min de commit).
+
+### 12.1 ✅ FIX — Navbar glass em todas as páginas (consistência visual)
+
+**Mudança** (`dist/site.js`, mount no `pageKey`/`glass`):
+- L1484: `var glass = pageKey === "home"` → `var glass = true`
+- Mantida a prop `glass` no `SiteNav` (caller decide, mas agora sempre true)
+
+**Comportamento agora**:
+- Todas as 8 páginas (Home + 6 internas + 404) têm navbar com `var(--glass-bg)` + `var(--glass-blur)` + `border-bottom: rgba(253,248,242,.18)`
+- Logo (SiteLogo) sempre `variant: "horizontal-light"` (sempre a versão clara)
+- Nav links continuam `color: var(--text-heading)` (escuro) — alto contraste contra fundo glass+blur sand claro funciona
+
+**Atenção pro futuro**: se quiser variar a navbar por rota (ex: dark em páginas dark), reintroduzir a prop `glass` controlada pelo caller. Por enquanto o "sempre glass" é o caminho consistente.
+
+### 12.2 ✅ FIX — Hamburger color sempre magenta-500
+
+**Mudança** (`dist/site.js`, SiteNav, botão hamburger):
+- L298: `color: glass ? "var(--sand-500)" : "var(--text-heading)"` → `color: "var(--magenta-500)"`
+- Removida a condicional (glass sempre true agora)
+
+**Por quê**: sand-500 (claro) sobre fundo glass+blur sand-claro ficava invisível. Magenta-500 é o accent brand, dá contraste forte contra o sand e cria hierarquia visual.
+
+### 12.3 ✅ FIX — Footer overflow horizontal no mobile
+
+**Mudança** (`dist/site.js`, SiteFooter, linha do copyright):
+- Span do `"caicaramarketing.com.br · (13) 97806-2772 · Santos, SP"` ganhou `style: { wordBreak: "break-word", overflowWrap: "anywhere" }`
+- Força a quebra do texto longo em qualquer ponto, não só em espaços
+
+**Verificação**: em mobile (< 420px) o span agora quebra em múltiplas linhas em vez de forçar scroll horizontal.
+
+**Não investiguei a fundo** (o fix 12.3 foi suficiente): outras possíveis causas seriam as 3 colunas de links ou a div da logo+social. Se overflow persistir em algum device específico, adicionar `outline: 1px solid red` em cada div do footer e identificar qual está extrapolando.
+
+### 12.4 ✅ FIX — Logo do footer 32 → 40px
+
+**Mudança** (`dist/site.js`, SiteFooter):
+- L441: `h(SiteLogo, { variant: "horizontal-light", height: 32 })` → `height: 40`
+- Tenta deixar a logo do footer visualmente equilibrada com a do nav (34px)
+
+**Por que não usei `clamp()`**: simplifica. A logo do footer é fixa em 40px em todos os breakpoints (testado, fica OK no mobile também porque tem `maxWidth: 240px`).
+
+### 12.5 Pendências de v1.0.5 (ainda não resolvidas)
+
+- LGPD cookie banner — Matheus ainda não pediu
+- Analytics (GA4 ou Plausible) — sem tag instalada
+
+### 12.6 Verificação realizada antes do commit v1.0.6
+
+```
+✓ node --check dist/site.js          (sintaxe)
+✓ node scripts/check-version.mjs v1.0.6  (19/19 arquivos)
+✓ git status: 20 arquivos modificados (19 version bump + 1 cabeçalho site.js)
+```
+
+Verificação em staging GHL pós-deploy pendente (Matheus cola os 19 blocos novos).
+
+---
+
+## 13. Pra próxima sessão começar (v1.0.6+)
+
+1. Lê este HANDOFF.md inteiro (especialmente §11 e §12)
+2. Lê README.md (setup do GHL)
+3. **Antes de qualquer coisa**: verifica se o GHL staging foi atualizado pra v1.0.6:
+   ```
+   # Script de verificação (não commitado, criar se quiser)
+   # Loop: GET em cada uma das 8 URLs e checa qual @v está sendo servida
+   ```
+4. Próximas tarefas prováveis (em ordem de prioridade):
+   - **LGPD cookie banner** (se Matheus pedir)
+   - **Analytics** (GA4 ou Plausible, se pedir)
+   - **Mais OG images otimizadas** (se achar que estão muito pesadas)
+   - **Mais cases / páginas de detalhe** (se a lista de 4 cases crescer)
+   - **Pinned anchors / scroll suave** (se notar)
+   - **Open Graph de Twitter** (se a página for compartilhada no Twitter)
+5. Antes de commitar, sempre rodar `node scripts/check-version.mjs v1.0.X` e `node --check dist/site.js`.
+
+---
+
+_Deploy v1.0.6 feito em 19/08/2026 (sessão ~17:45 → ~18:30). Próxima sessão: verificar se o staging GHL foi atualizado e partir pro próximo item._
