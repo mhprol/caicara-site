@@ -5,6 +5,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "node scripts/build.mjs",
+    "optimize:images": "node scripts/optimize-images.mjs",
     "render:og": "node scripts/render-og.mjs",
     "deploy:check": "node scripts/check-version.mjs"
   },
@@ -13,5 +15,8 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
   }
 }

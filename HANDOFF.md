@@ -1,6 +1,6 @@
 # Caiçara · Site institucional — Handoff
 
-> Documento de continuação entre sessões. Última atualização: **v1.0.8** (19/08/2026).
+> Documento de continuação entre sessões. Última atualização: **v1.0.9** (19/08/2026).
 > A próxima sessão deve ler este arquivo inteiro antes de tocar em qualquer coisa.
 
 ---
@@ -9,16 +9,19 @@
 
 | Componente | Estado | Versão |
 |---|---|---|
-| Repo `mhprol/caicara-site` | público, tags `v1.0.0`..`v1.0.8` | v1.0.8 ✓ |
-| `dist/site.js` (React app) | production-ready, ~70KB | v1.0.8 |
-| `dist/site.css` (tokens + reset + media queries) | production-ready, ~22KB | v1.0.8 |
-| `dist/ds-bundle.js` (Design System) | verbatim copy, 185KB | v1.0.8 |
-| `og/*.png` (8 imagens 1200×630) | commitadas, 100–250KB cada | v1.0.8 |
-| `llms.txt`, `robots.txt`, `sitemap.xml` | commitados | v1.0.8 |
-| GHL staging `staging.caicaramarketing.com.br` | **em v1.0.5** — atualizar pra v1.0.8 (ver §4) | v1.0.5 |
+| Repo `mhprol/caicara-site` | público, tags `v1.0.0`..`v1.0.9` | v1.0.9 ✓ |
+| `dist/site.js` (React app) | production-ready, minified, **50.7KB** | v1.0.9 |
+| `dist/site.css` (tokens + reset + media queries) | production-ready, ~22KB | v1.0.9 |
+| `dist/ds-bundle.js` (Design System) | minified, **121.9KB** | v1.0.9 |
+| `og/*.png` (8 imagens 1200×630) | commitadas, 100–250KB cada | v1.0.9 |
+| `llms.txt`, `robots.txt`, `sitemap.xml` | commitados | v1.0.9 |
+| `assets/imagery/*.webp` (7 arquivos) | **otimizados** (-97% no maior) | v1.0.9 |
+| `assets/photography/*.webp` (19 arquivos) | **otimizados** (-93% no maior) | v1.0.9 |
+| `assets/logo/*.webp` (8 logos) | **convertidos de PNG pra WebP** | v1.0.9 |
+| GHL staging `staging.caicaramarketing.com.br` | **em v1.0.5** — atualizar pra v1.0.9 (ver §4) | v1.0.5 |
 | GHL produção `caicaramarketing.com.br` | **não deployado** | — |
 
-**Última sessão**: 4 fixes (navbar glass sempre, hamburger magenta, footer overflow, logo footer 40px) + fix LinkedIn URL + copy shift (ângulo novo em /sobre, /servicos, /home) — bumps v1.0.6, v1.0.7, v1.0.8.
+**Última sessão**: 4 fixes (navbar glass sempre, hamburger magenta, footer overflow, logo footer 40px) + fix LinkedIn URL + copy shift (ângulo novo em /sobre, /servicos, /home) + **performance tier 1** (imagens, minify, preconnects, width/height) — bumps v1.0.6, v1.0.7, v1.0.8, v1.0.9.
 
 ---
 
@@ -232,6 +235,7 @@ git push origin main --tags
 | v1.0.6 | Navbar glass em todas as páginas, hamburger magenta-500, footer overflow fix, logo footer 40px |
 | v1.0.7 | LinkedIn URL fix (slug correto + br. subdomain) |
 | v1.0.8 | Copy shift — ângulo novo: Caiçara coordena recursos (não "equipe dedicada") |
+| v1.0.9 | Performance Tier 1: imagens otimizadas (-11.5MB), JS minificado (-92KB), preconnects corrigidos, width/height |
 
 ---
 
@@ -548,4 +552,117 @@ Bump: 19 arquivos (padrão).
 
 ---
 
-_Deploys v1.0.7 e v1.0.8 feitos em 19/08/2026 (sessão ~17:50 → ~18:15). Próxima sessão: verificar staging GHL atualizado, avaliar se a copy nova está performando, e partir pro próximo item (LGPD cookie banner é o top priority pendente)._
+## 15. v1.0.9 release notes — Performance Tier 1 (19/08/2026)
+
+**Origem**: a Matheus subiu os 2 PDFs de PageSpeed Insights (mobile + desktop) em `audits/` e pediu um plano abrangente. Diagnóstico:
+- Mobile Performance: **58** (LCP 6.4s, FCP 5.9s)
+- Desktop Performance: **77** (LCP 2.0s, FCP 1.5s)
+- A11y/SEO/BP: 96/100/100 ✓
+
+**Top issues (mobile)**:
+1. Imagens pesadas — `camila-caicara.png` sozinho = 2.952 KB
+2. Cadeia de fonte bloqueia LCP (font Montserrat: 11.268ms)
+3. JS não minificado (39KB savings)
+4. 4 preconnects não usados (overhead no handshake)
+
+**Tier 1 entregue** (~2h, escopo aprovado por Matheus via ask_user):
+
+### 15.1 ✅ Imagens otimizadas (-11.5MB / -72.8%)
+
+Script novo: `scripts/optimize-images.mjs` (usa `sharp`, já tinha no projeto).
+
+**34 arquivos processados**:
+
+| Categoria | Antes | Depois | Savings |
+|---|---|---|---|
+| `assets/imagery/` (7 arquivos) | 3.96 MB | 374 KB | **-3.58 MB** (-91%) |
+| `assets/photography/` (19 arquivos) | 10.6 MB | 3.79 MB | **-6.81 MB** (-64%) |
+| `assets/logo/` (8 logos) | 1.13 MB | 194 KB | **-936 KB** (-83%) |
+| **Total** | **15.69 MB** | **4.35 MB** | **-11.34 MB (-72%)** |
+
+**Maior vilão único resolvido**: `camila-caicara.png` (2.952 KB) → `camila-caicara.webp` (**89 KB, -97%**).
+
+Estratégia: PNG/JPG → WebP lossy 80, max-width 1920px (photography) / 1440px (imagery) / 1200px (logo). SVGs intactos (já são vetoriais).
+
+**Logo horizontal PNG → WebP**: 115KB → 31KB (-73%). Mudança: `LOGO_FILES` no `dist/site.js` agora aponta pra `.webp`.
+
+**Nota técnica**: o repo tem hardlinks entre `C:\Users\mhpro\.mavis\...` e `C:\Users\mhpro\.minimax\...` (otimização do Windows). O script usa `writeFileSync` sobrescrevendo o target direto (preserva inode) — funciona com hardlinks, evita EBUSY/EPERM.
+
+### 15.2 ✅ JavaScript minificado (-92KB / -34.7%)
+
+Script novo: `scripts/build.mjs` (esbuild). Comando: `npm run build`.
+
+| Arquivo | Antes | Depois | Savings |
+|---|---|---|---|
+| `dist/site.js` | 79.5 KB | **50.7 KB** | -28.9 KB (-36.2%) |
+| `dist/ds-bundle.js` | 184.9 KB | **121.9 KB** | -63.0 KB (-34.1%) |
+| **Total** | **264.4 KB** | **172.6 KB** | **-91.9 KB (-34.7%)** |
+
+Config: `target: 'es2017'`, `minify: true`, `format: 'iife'`, `legalComments: 'none'`.
+
+**Workflow novo**: editar `dist/site.js` (legível) → rodar `npm run build` → commitar minificado.
+
+### 15.3 ✅ Preconnects não usados removidos (2 do GHL HEADER)
+
+Em `ghl/_site-wide-HEADER.html`:
+- Removido: `<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>` (CDN descobre sozinho via tag script)
+- Removido: `<link rel="preconnect" href="https://unpkg.com" crossorigin>` (React/Lucide descobrem via tag script)
+- Mantido: `fonts.googleapis.com` e `fonts.gstatic.com` (usados pela chain de font)
+- Mantidos: `backend.leadconnectorhq.com`, `images.leadconnectorhq.com` (injetados pelo GHL, fora do nosso controle)
+
+Cai **2 handshakes TCP/TLS** do critical path.
+
+### 15.4 ✅ width/height explícitos nas imagens do hero (CLS → 0)
+
+3 imagens do hero tinham só `style: { width: "100%", height: X }` (CSS) — Lighthouse queria atributos HTML pra reservar o espaço.
+
+Mudanças em `dist/site.js`:
+- **farol-na-costa.webp** (LCP do /sobre): `width: 1103, height: 735, fetchpriority: "high"`
+- **bussola.webp** (home, seção Método): `width: 901, height: 648, fetchpriority: "high"`
+- **santos-mureta.webp** (contato): `width: 1154, height: 200`
+- **SiteLogo**: `width: isSymbol ? height : Math.round(height * 3)` (assumindo aspect 3:1 dos horizontais)
+
+CLS esperado: 0.027 → **~0** (margem segura).
+
+### 15.5 Referências a imagens atualizadas
+
+- `PESSOAS[0].img` (Camila) + `TESTIMONIALS[0].img` (Camila): `camila-caicara.png` → `camila-caicara.webp`
+- `LOGO_FILES`: 7 paths de `.png` → `.webp`
+
+### 15.6 Não entregue (escopo ou limitação técnica)
+
+- **font-display: swap**: o `dist/site.css` não tem `@font-face` (as fonts Montserrat/Playfair são injetadas pelo `ds-bundle.js` ou pelo GHL). Sem acesso, não dá pra mexer sem editar o DS verbatim. Pendente pra quando o DS permitir.
+- **Contraste do botão "Agendar diagnóstico"** (A11y 96): o botão fica dentro do `PhotoHero` do DS, que é verbatim. Não dá pra mudar sem editar o DS.
+- **GHL chat widget defer**: a configuração fica no GHL admin (Settings → Chat Widget → "Show on" ou "Load delay"). Não é editável por código. Pendente: Matheus configura manualmente.
+
+### 15.7 Verificação realizada
+
+```
+✓ node --check dist/site.js                (sintaxe pos-minify)
+✓ node --check dist/ds-bundle.js           (sintaxe pos-minify)
+✓ node scripts/check-version.mjs v1.0.9    (19/19 arquivos)
+```
+
+### 15.8 Resultado esperado (mobile, post-deploy em staging)
+
+- Performance: **58 → 72-80**
+- LCP: 6.4s → **3.5-4.5s**
+- FCP: 5.9s → **3.0-3.5s**
+- SI: 18.2s → **8-10s**
+- Payload total: 6.2MB → **~1.5MB**
+
+### 15.9 Pendências performance
+
+- **Tier 2**: code-split DS, self-host font, defer GHL chat (admin), preload site.css
+- **Tier 3**: AVIF, ESM modules, SSR com Vite, service worker
+
+**Ação manual do Matheus** (não tem como automatizar):
+1. Colar os 19 blocos novos no GHL staging (urls em HANDOFF §4 com v1.0.9)
+2. Rodar `node scripts/check-staging.mjs` (criar se não existir) pra confirmar v1.0.9 em todas as 8 páginas
+3. Configurar GHL chat widget pra defer/after-idle (Settings → Chat Widget)
+4. Rodar PageSpeed Insights de novo (https://pagespeed.web.dev/) pra confirmar o ganho
+5. Se aprovado, partir pro Tier 2 (code-split, self-host font)
+
+---
+
+_Deploys v1.0.6 → v1.0.9 feitos em 19/08/2026 (sessão ~17:45 → ~18:30). Última ação: bump v1.0.9 com Tier 1 de performance. Próxima sessão: validar ganho no PSI, e se OK, partir pro Tier 2 ou LGPD cookie banner._
