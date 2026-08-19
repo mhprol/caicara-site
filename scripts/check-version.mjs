@@ -26,6 +26,14 @@ const TARGET_FILES = [
   "ghl/contato-HEADER.html",
   "ghl/politica-de-privacidade-HEADER.html",
   "ghl/404-HEADER.html",
+  "ghl/home-BODY.html",
+  "ghl/servicos-BODY.html",
+  "ghl/metodo-BODY.html",
+  "ghl/cases-BODY.html",
+  "ghl/sobre-BODY.html",
+  "ghl/contato-BODY.html",
+  "ghl/politica-de-privacidade-BODY.html",
+  "ghl/404-BODY.html",
   "sitemap.xml",
   "dist/site.js"
 ];

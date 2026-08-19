@@ -337,6 +337,7 @@ img, svg, video { max-width: 100%; display: block; }
 :focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: 2px; border-radius: 3px; }
 
 /* ── Page layout helpers ─────────────────────────────────────────────────────── */
+html, body { overflow-x: hidden; }
 .caicara-page { min-height: 60vh; padding-bottom: var(--space-12); }
 .caicara-skip-link {
   position: absolute; top: -100px; left: 16px;
@@ -485,10 +486,17 @@ img, svg, video { max-width: 100%; display: block; }
   /* ── Padding interno das Section (caso SectionHelper use classe) ─── */
   .caicara-section { padding: var(--section-y) 0 !important; }
 
-  /* ── Mobile menu overlay (estado hidden por padrão) ───────────────── */
-  .caicara-mobile-menu { display: none; }
-  .caicara-mobile-menu[data-open="true"] { display: flex !important; }
+  /* ── Mobile menu: o display/opacity/visibility já é tratado na regra base ── */
+
+  /* ── Footer grid stack (4 colunas -> 1 coluna) ──────────────────── */
+  .caicara-grid-footer { grid-template-columns: 1fr !important; gap: var(--space-8) !important; }
+  .caicara-grid-footer > div:first-child { text-align: left; }
+
+  /* ── Stats: empilha em 100% no menor ─────────────────────────── */
+  .caicara-grid-stats > * { flex: 1 1 calc(50% - var(--space-3)) !important; }
 }
+
+/* Hamburger button (sempre presente no DOM, mas hidden em desktop) */
 
 /* Celular pequeno — afina mais */
 @media (max-width: 420px) {
@@ -511,6 +519,18 @@ img, svg, video { max-width: 100%; display: block; }
   flex-direction: column;
   padding: var(--space-6) var(--container-gutter) var(--space-12);
   overflow-y: auto;
+  box-sizing: border-box;
+  /* Escondido por padrão — desktop E mobile, a menos que data-open=true */
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-base) var(--ease-out), visibility 0s linear var(--dur-base);
+}
+.caicara-mobile-menu[data-open="true"] {
+  display: flex !important;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--dur-base) var(--ease-out), visibility 0s linear 0s;
 }
 .caicara-mobile-menu-header {
   display: flex; align-items: center; justify-content: space-between;

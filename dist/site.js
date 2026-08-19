@@ -13,7 +13,7 @@
   // ── 0. Configuração ──────────────────────────────────────────────────────────
   // O BASE é a URL raiz do repo (sem trailing slash) — onde estão os assets e o
   // bundle do Design System. O atributo data-base do #caicara-page sobrescreve.
-  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.4";
+  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.5";
   var DS_NS = "CaiAraDesignSystem_096654";
 
   // ── 1. Helpers ──────────────────────────────────────────────────────────────
@@ -122,6 +122,36 @@
       className: "caicara-icon",
       style: { display: "inline-flex", lineHeight: 0, color: color, verticalAlign: "middle", flexShrink: 0, ...style }
     });
+  }
+
+  // ── 2b. BurgerIcon (inline SVG, sem dependência de Lucide) ────────────────
+  // O Lucide às vezes falha em mobile (rede lenta / CSP). Ter o ícone como
+  // SVG inline garante que o botão de menu apareça mesmo se a UMD do
+  // Lucide não carregar. Mesmo visual do Lucide (traço 1.75, currentColor).
+  function BurgerIcon(props) {
+    var open = !!props.open;
+    var common = {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: 24, height: 24,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: 1.75,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      "aria-hidden": "true"
+    };
+    if (open) {
+      return h("svg", common, null,
+        h("line", { x1: 6, y1: 6, x2: 18, y2: 18 }),
+        h("line", { x1: 6, y1: 18, x2: 18, y2: 6 })
+      );
+    }
+    return h("svg", common, null,
+      h("line", { x1: 3, y1: 6, x2: 21, y2: 6 }),
+      h("line", { x1: 3, y1: 12, x2: 21, y2: 12 }),
+      h("line", { x1: 3, y1: 18, x2: 21, y2: 18 })
+    );
   }
 
   // ── 3. SiteLogo (BASE-aware) ─────────────────────────────────────────────────
@@ -268,7 +298,7 @@
             color: glass ? "var(--sand-500)" : "var(--text-heading)",
             marginLeft: "auto"
           }
-        }, h(Icon, { name: menuOpen ? "x" : "menu", size: 24 }))
+        }, h(BurgerIcon, { open: menuOpen }))
       ),
 
       // Mobile menu overlay
@@ -293,7 +323,7 @@
             "aria-label": "Fechar menu",
             onClick: function () { setMenuOpen(false); },
             style: { color: "var(--sand-500)" }
-          }, h(Icon, { name: "x", size: 24 }))
+          }, h(BurgerIcon, { open: true }))
         ),
         h("ul", { className: "caicara-mobile-menu-list" },
           ...NAV_LINKS.map(function (l) {
@@ -403,6 +433,7 @@
         style: {
           maxWidth: "var(--container-max)", margin: "0 auto",
           padding: "var(--space-16) var(--container-gutter) var(--space-8)",
+          className: "caicara-grid-footer",
           display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", gap: "var(--space-12)"
         }
       },
