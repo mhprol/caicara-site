@@ -13,7 +13,7 @@
   // ── 0. Configuração ──────────────────────────────────────────────────────────
   // O BASE é a URL raiz do repo (sem trailing slash) — onde estão os assets e o
   // bundle do Design System. O atributo data-base do #caicara-page sobrescreve.
-  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.6";
+  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.7";
   var DS_NS = "CaiAraDesignSystem_096654";
 
   // ── 1. Helpers ──────────────────────────────────────────────────────────────
@@ -450,7 +450,7 @@
           },
             ...[
               { n: "instagram", href: "https://instagram.com/caicaramarketing", target: "_blank" },
-              { n: "linkedin", href: "https://linkedin.com/company/caicara-marketing-digital", target: "_blank" },
+              { n: "linkedin", href: "https://br.linkedin.com/company/caicaramarketing", target: "_blank" },
               { n: "youtube", href: "https://youtube.com/@caicaramarketing", target: "_blank" },
               { n: "facebook", href: "https://facebook.com/caicaramarketing", target: "_blank" }
             ].map(function (s) {
