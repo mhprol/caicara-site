@@ -13,7 +13,7 @@
   // ── 0. Configuração ──────────────────────────────────────────────────────────
   // O BASE é a URL raiz do repo (sem trailing slash) — onde estão os assets e o
   // bundle do Design System. O atributo data-base do #caicara-page sobrescreve.
-  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.1";
+  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.2";
   var DS_NS = "CaiAraDesignSystem_096654";
 
   // ── 1. Helpers ──────────────────────────────────────────────────────────────
@@ -65,36 +65,62 @@
   }
 
   // ── 2. Icon (Lucide wrapper) ─────────────────────────────────────────────────
+  // Robusto contra race condition do UMD e contra ícones faltando no pacote.
   function Icon(props) {
     var name = props.name, size = props.size || 20, stroke = props.stroke || 1.75;
     var color = props.color || "currentColor";
     var style = props.style || {};
     var ref = React.useRef(null);
+    var doneRef = React.useRef(false);
+    var triesRef = React.useRef(0);
+
     React.useEffect(function () {
-      var L = window.lucide, host = ref.current;
-      if (!L || !host) return;
-      var key = name.split("-").map(function (p) { return p.charAt(0).toUpperCase() + p.slice(1); }).join("");
-      host.innerHTML = "";
-      var node = L.icons && (L.icons[key] || L.icons[name]);
-      if (node && L.createElement) {
-        var e = L.createElement(node);
-        e.setAttribute("width", size);
-        e.setAttribute("height", size);
-        e.setAttribute("stroke-width", stroke);
-        host.appendChild(e);
-      } else if (L.createIcons) {
-        var ph = document.createElement("i");
-        ph.setAttribute("data-lucide", name);
-        ph.setAttribute("width", size);
-        ph.setAttribute("height", size);
-        host.appendChild(ph);
-        L.createIcons({ attrs: { width: size, height: size, "stroke-width": stroke } });
+      if (doneRef.current) return;
+      function tryRender() {
+        if (doneRef.current) return;
+        var L = window.lucide, host = ref.current;
+        if (!host) return;
+        if (!L) {
+          if (triesRef.current++ < 50) setTimeout(tryRender, 60);
+          else if (typeof console !== "undefined") console.warn("[Caiçara] Lucide não carregou — ícone '" + name + "' não renderizado");
+          return;
+        }
+        var key = name.split("-").map(function (p) { return p.charAt(0).toUpperCase() + p.slice(1); }).join("");
+        var node = L.icons && (L.icons[key] || L.icons[name]);
+        if (node && L.createElement) {
+          host.innerHTML = "";
+          var e = L.createElement(node);
+          e.setAttribute("width", size);
+          e.setAttribute("height", size);
+          e.setAttribute("stroke-width", stroke);
+          host.appendChild(e);
+          doneRef.current = true;
+        } else if (L.createIcons) {
+          // Fallback: usa data-lucide + createIcons
+          host.innerHTML = "";
+          var ph = document.createElement("i");
+          ph.setAttribute("data-lucide", name);
+          ph.setAttribute("width", size);
+          ph.setAttribute("height", size);
+          ph.setAttribute("stroke-width", stroke);
+          host.appendChild(ph);
+          L.createIcons({ attrs: { width: size, height: size, "stroke-width": stroke } });
+          doneRef.current = true;
+        } else if (triesRef.current++ < 50) {
+          // Lucide presente mas APIs ainda não inicializadas
+          setTimeout(tryRender, 60);
+        } else if (typeof console !== "undefined") {
+          console.warn("[Caiçara] Ícone '" + name + "' não encontrado em window.lucide.icons");
+        }
       }
+      tryRender();
     }, [name, size, stroke]);
+
     return h("span", {
       ref: ref,
       "aria-hidden": "true",
-      style: { display: "inline-flex", lineHeight: 0, color: color, ...style }
+      className: "caicara-icon",
+      style: { display: "inline-flex", lineHeight: 0, color: color, verticalAlign: "middle", flexShrink: 0, ...style }
     });
   }
 
@@ -113,6 +139,8 @@
     var height = props.height || 34;
     var src = asset(LOGO_FILES[variant] || LOGO_FILES["horizontal-dark"]);
     var isSymbol = variant.indexOf("symbol") === 0 || variant === "seal";
+    // alignSelf: flex-start impede que o flex column do footer estique a imagem
+    // horizontalmente (default align-items: stretch do flex column).
     return h("img", {
       src: src,
       alt: "Caiçara Marketing Digital Estratégico",
@@ -120,7 +148,14 @@
       height: height,
       loading: "lazy",
       decoding: "async",
-      style: { height: height, width: isSymbol ? height : "auto", display: "block" }
+      style: {
+        height: height,
+        width: isSymbol ? height : "auto",
+        maxWidth: isSymbol ? height : "240px",
+        display: "block",
+        alignSelf: "flex-start",
+        flexShrink: 0
+      }
     });
   }
 
@@ -137,11 +172,17 @@
     var active = props.active, glass = props.glass;
     var hoverRef = React.useRef(null);
     var setHover = function (v) { hoverRef.current = v; };
+    // position: fixed (em vez de sticky) — sticky é silenciosamente quebrado
+    // pelo GoHighLevel em várias páginas (ancestral com overflow/transform).
+    // O body recebe padding-top: 72px nas páginas não-home (via mount()) para
+    // que o conteúdo não fique escondido atrás do nav.
     var style = {
+      position: "fixed",
+      top: 0, left: 0, right: 0,
       height: 72,
       display: "flex", alignItems: "center", gap: "var(--space-8)",
       padding: "0 var(--space-6)", boxSizing: "border-box",
-      position: "sticky", top: 0, zIndex: 40,
+      zIndex: 50,
       background: glass ? "var(--glass-bg)" : "var(--surface-page)",
       backdropFilter: glass ? "var(--glass-blur)" : "none",
       WebkitBackdropFilter: glass ? "var(--glass-blur)" : "none",
@@ -1039,11 +1080,31 @@
           },
             ...PESSOAS.map(function (p) {
               return h(Card, { key: p.nome, padding: "0", style: { overflow: "hidden" } },
-                el("div", { style: { display: "grid", gridTemplateColumns: "200px 1fr", alignItems: "stretch" } },
-                  h("img", {
-                    src: asset(p.img), alt: p.nome,
-                    style: { width: "100%", height: "100%", minHeight: 220, objectFit: "cover" }
-                  }),
+                el("div", {
+                  style: {
+                    display: "grid",
+                    gridTemplateColumns: "minmax(0, 220px) minmax(0, 1fr)",
+                    alignItems: "stretch",
+                    minHeight: 240,
+                    maxHeight: 340
+                  }
+                },
+                  el("div", {
+                    style: {
+                      width: "100%", height: "100%",
+                      background: "var(--sand-100)",
+                      overflow: "hidden"
+                    }
+                  },
+                    h("img", {
+                      src: asset(p.img), alt: p.nome, loading: "lazy", decoding: "async",
+                      style: {
+                        width: "100%", height: "100%",
+                        objectFit: "cover", objectPosition: "center top",
+                        display: "block"
+                      }
+                    })
+                  ),
                   el("div", { style: { padding: "var(--space-6)", display: "flex", flexDirection: "column", gap: "var(--space-2)" } },
                     h("h3", { style: { margin: 0, fontSize: "var(--fs-xl)", fontWeight: "var(--fw-semibold)", color: "var(--text-heading)" } }, p.nome),
                     h("div", { style: { fontSize: "var(--fs-caption)", color: "var(--text-accent)", fontWeight: "var(--fw-semibold)", letterSpacing: "var(--ls-overline)", textTransform: "uppercase" } }, p.role),
@@ -1233,33 +1294,62 @@
     var entry = PAGE_MAP[pageKey] || PAGE_MAP["404"];
 
     getDS().then(function (DS) {
+      // Cada render em seu próprio try/catch para que uma falha em uma
+      // região (ex: page component) não impeça as outras (nav, footer).
+      if (!DS) {
+        console.error("[Caiçara] Bundle do Design System não carregou (window." + DS_NS + " ausente).");
+        if (host) ReactDOM.createRoot(host).render(h(ErrorFallback, { error: "Bundle do Design System não carregou." }));
+        return;
+      }
+
+      // Garante espaço para o nav fixo nas páginas não-home. A home tem
+      // PhotoHero full-bleed — o nav flutua sobre o herói.
       try {
-        if (!DS) throw new Error("Bundle do Design System não carregou (window." + DS_NS + " ausente).");
+        document.body.style.paddingTop = (pageKey === "home") ? "0px" : "72px";
+      } catch (e) { /* body pode não existir em testes */ }
+
+      // 1) Nav
+      try {
         if (navHost) {
           var glass = pageKey === "home";
           ReactDOM.createRoot(navHost).render(
             h(SiteNav, { active: entry.navActive, glass: glass })
           );
         }
+      } catch (err) {
+        console.error("[Caiçara] erro ao montar nav:", err);
+      }
+
+      // 2) Page
+      try {
         var PageComp = entry.Comp;
         ReactDOM.createRoot(host).render(
           h(React.Fragment, null,
             h(PageComp, { DS: DS })
           )
         );
+      } catch (err) {
+        console.error("[Caiçara] erro ao montar page:", err);
+        if (host) ReactDOM.createRoot(host).render(h(ErrorFallback, { error: String(err && err.message || err) }));
+      }
+
+      // 3) Footer (sempre tenta, independente de erros anteriores)
+      try {
         if (footerHost) {
           ReactDOM.createRoot(footerHost).render(h(SiteFooter, null));
         }
-        // Update document.title if set
+      } catch (err) {
+        console.error("[Caiçara] erro ao montar footer:", err);
+      }
+
+      // 4) document.title (não bloqueante)
+      try {
         if (entry.title) {
           var path = (window.location.pathname || "/").toLowerCase();
-          // If we are on /404 (a real 404 URL, slug "404" or anything that didn't match),
-          // don't claim a custom title — let the page-wide HEADER SEO take precedence.
           if (pageKey !== "404" || path === "/404") document.title = entry.title;
         }
       } catch (err) {
-        console.error("[Caiçara] erro de render:", err);
-        if (host) ReactDOM.createRoot(host).render(h(ErrorFallback, { error: String(err && err.message || err) }));
+        console.error("[Caiçara] erro ao setar document.title:", err);
       }
     });
   }

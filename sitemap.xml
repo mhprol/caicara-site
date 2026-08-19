@@ -10,7 +10,7 @@
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://caicaramarketing.com.br/" />
     <image:image>
-      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.1/og/home.png</image:loc>
+      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.2/og/home.png</image:loc>
       <image:title>Caiçara Marketing Digital — Seu porto seguro no marketing digital</image:title>
       <image:caption>Farol ao pôr do sol — Caiçara Marketing</image:caption>
     </image:image>
@@ -23,7 +23,7 @@
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://caicaramarketing.com.br/servicos" />
     <image:image>
-      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.1/og/servicos.png</image:loc>
+      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.2/og/servicos.png</image:loc>
       <image:title>Serviços de marketing digital — Caiçara</image:title>
     </image:image>
   </url>
@@ -35,7 +35,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://caicaramarketing.com.br/metodo" />
     <image:image>
-      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.1/og/metodo.png</image:loc>
+      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.2/og/metodo.png</image:loc>
       <image:title>Método PEMD — Do diagnóstico ao destino</image:title>
     </image:image>
   </url>
@@ -47,7 +47,7 @@
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://caicaramarketing.com.br/cases" />
     <image:image>
-      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.1/og/cases.png</image:loc>
+      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.2/og/cases.png</image:loc>
       <image:title>Cases — Resultados reais de clientes</image:title>
     </image:image>
   </url>
@@ -59,7 +59,7 @@
     <priority>0.6</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://caicaramarketing.com.br/sobre" />
     <image:image>
-      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.1/og/sobre.png</image:loc>
+      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.2/og/sobre.png</image:loc>
       <image:title>A Caiçara — Quem está ao leme</image:title>
     </image:image>
   </url>
@@ -71,7 +71,7 @@
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://caicaramarketing.com.br/contato" />
     <image:image>
-      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.1/og/contato.png</image:loc>
+      <image:loc>https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.2/og/contato.png</image:loc>
       <image:title>Contato — Caiçara Marketing</image:title>
     </image:image>
   </url>
