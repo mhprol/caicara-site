@@ -248,4 +248,138 @@ git push origin main --tags
 
 ---
 
-_Fim do handoff. Qualquer dúvida, ler o README.md, os comentários inline no `dist/site.js`, ou o `memoria_promethia.md` no Drive._
+## 11. Próximas iterações (sessão 19/08/2026)
+
+4 itens identificados no final da sessão. Os 3 últimos são **bugs a corrigir** na próxima iteração; o primeiro é **design spec a preservar**.
+
+### 11.1 ✨ PRESERVAR — Navbar translúcido só na home
+
+**Comportamento atual (intencional)**:
+- Na **Home**: navbar tem `background: var(--glass-bg)` (rgba 16% do sand-500) + `backdrop-filter: var(--glass-blur)` (blur 14px + saturate 1.1). Visualmente, o nav fica "flutuando" sobre o PhotoHero com efeito de vidro fosco.
+- Nas **demais páginas**: navbar tem `background: var(--surface-page)` (sand-500 sólido) + sem blur. Navbar opaca, ancorada.
+
+**Onde está no código** (`dist/site.js`, SiteNav):
+```js
+var glass = pageKey === "home";  // mount() passa pageKey via PAGE_MAP
+...
+background: glass ? "var(--glass-bg)" : "var(--surface-page)",
+backdropFilter: glass ? "var(--glass-blur)" : "none",
+```
+
+A `var(--glass-bg)` e `var(--glass-blur)` vêm do Design System (src/tokens/elevation.css).
+
+**Regra pra próxima sessão**: **NÃO ALTERAR**. Esse contraste é intencional — dá destaque à home (que é a página de captação principal) e mantém a legibilidade nas páginas internas. Se for "consertar" a opacidade das internas, estraga o efeito.
+
+---
+
+### 11.2 🐛 FIX — Hamburger icon sem cor de destaque no mobile
+
+**Problema**: o `<button class="caicara-nav-burger">` (visível só < 768px) está usando `color: "var(--text-heading)"` (#28144C, violeta escuro) no estado default (não-home). Sobre o fundo `var(--surface-page)` (#FDF8F2, sand claro), o ícone fica visualmente "fraco" — sem hierarchy, parece um botão secundário.
+
+**Onde mudar** (`dist/site.js`, SiteNav, dentro do botão hamburger):
+```js
+// ATUAL (fraco):
+style: {
+  color: glass ? "var(--sand-500)" : "var(--text-heading)",
+  marginLeft: "auto"
+}
+
+// PROPOSTO (forte):
+style: {
+  color: "var(--magenta-500)",  // sempre accent, em qualquer página
+  marginLeft: "auto"
+}
+```
+
+**Alternativas** (se magenta forte destoar):
+- `var(--cyan-500)` (#00A5D7) — accent secundário
+- Adicionar um background circular sand-200 ao redor do ícone (acentua sem mudar cor)
+
+**Verificação**: DevTools mobile (< 768px), abrir qualquer página não-home, conferir que o ícone do hamburger tem contraste forte com o fundo sand.
+
+---
+
+### 11.3 🐛 FIX — Footer com overflow horizontal no mobile
+
+**Problema**: o footer empilha em 1 coluna no mobile (graças a `.caicara-grid-footer` no site.css v1.0.5), mas algo dentro do footer está excedendo a largura do viewport, causando scroll horizontal.
+
+**Causa mais provável**: a string `"caicaramarketing.com.br · (13) 97806-2772 · Santos, SP"` (linha do copyright/mono) é longa demais e o `<span>` não está quebrando. Como o `display: flex; flexWrap: wrap` no container pai deveria resolver, mas talvez o font mono não quebra por padrão.
+
+**Onde mudar** (`dist/site.js`, SiteFooter, na div do copyright):
+```js
+// ATUAL:
+h("span", null, "caicaramarketing.com.br · (13) 97806-2772 · Santos, SP"),
+
+// PROPOSTO (quebra forçada):
+h("span", {
+  style: { wordBreak: "break-word", overflowWrap: "anywhere" }
+}, "caicaramarketing.com.br · (13) 97806-2772 · Santos, SP"),
+```
+
+**Também vale verificar** (em ordem de suspeita):
+1. As 3 colunas de links (Serviços, A Caiçara, Legal) — o link "Gestão de mídias sociais" pode estar overflow se a palavra "mídias" não quebrar
+2. O `<p>` da descrição do footer (maxWidth: 300px) — pode estar forçando largura mínima
+3. A div da logo + social icons — flex com gap pode estar excedendo
+
+**Verificação**: DevTools mobile, abrir qualquer página, scroll até o final. Se o footer inteiro não ultrapassa a viewport (sem scroll horizontal), tá OK. Adicionar `outline: 1px solid red` em cada div do footer pra ver qual está extrapolando.
+
+---
+
+### 11.4 🐛 FIX — Logo do footer muito pequena no desktop
+
+**Problema**: o `<SiteLogo variant="horizontal-light" height={32} />` no footer (v1.0.2+) está em 32px de altura, mas a logo do nav é 34px. Visualmente a logo do footer fica menor que a do nav, dando impressão de sub-importância.
+
+**Onde mudar** (`dist/site.js`, SiteFooter):
+```js
+// ATUAL:
+h(SiteLogo, { variant: "horizontal-light", height: 32 }),
+
+// PROPOSTO (desktop):
+h(SiteLogo, { variant: "horizontal-light", height: 40 }),
+```
+
+E no **CSS** (`dist/site.css`, ajustar o `.caicara-grid-footer > div:first-child` se necessário):
+```css
+@media (min-width: 769px) {
+  .caicara-grid-footer > div:first-child img { height: 40px !important; }
+}
+```
+
+Ou, mais elegante — deixar o JSX responsivo via CSS, setando no SiteLogo `style: { height: "clamp(32px, 4vw, 40px)" }`.
+
+**Verificação**: DevTools desktop (≥ 1200px), conferir que a logo do footer tem altura visualmente equilibrada com a logo do nav (34px) e com a hierarquia da página.
+
+---
+
+### 11.5 Workflow sugerido pra próxima sessão
+
+```bash
+# 1. Ler HANDOFF.md (este arquivo) + checar staging
+node scripts/check-staging.mjs  # se commitado, ou via http request
+
+# 2. Se staging está em v1.0.5:
+#    Bump pra v1.0.6, implementar 11.2/11.3/11.4, deploy
+
+# 3. Bump de versão (PowerShell, mesmo padrão do v1.0.4→v1.0.5):
+#    Edite os 19 arquivos (ghl/*-HEADER.html, ghl/*-BODY.html, sitemap.xml, dist/site.js)
+#    trocando @v1.0.5 -> @v1.0.6
+
+# 4. Validar antes de commit:
+node scripts/check-version.mjs v1.0.6
+node --check dist/site.js
+
+# 5. Commit + tag + push (padrão já documentado na §6)
+```
+
+### 11.6 Itens NÃO prioritários (considerar mais tarde)
+
+- Adicionar LGPD cookie banner (Matheus não pediu ainda)
+- Adicionar analytics (GA4 / Plausible) — sem tag instalada
+- Adicionar page de Maré Digital / blog (citada no footer nav, sem destino)
+- Internacionalização (atualmente só pt-BR)
+- PWA / service worker pra offline
+- Mais cases (atualmente 4 no filtro)
+
+---
+
+_Fim do handoff v1.0.5. Próxima sessão: ler §11, implementar 11.2/11.3/11.4, deploy v1.0.6._
