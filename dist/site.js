@@ -5,7 +5,7 @@
    Lucide (window.lucide) carregados externamente.
 
    Source: https://github.com/mhprol/caicara-site
-   Versão: 1.0.6
+   Versão: 1.0.8
    ─────────────────────────────────────────────────────────────────────────────── */
 (function () {
   "use strict";
@@ -13,7 +13,7 @@
   // ── 0. Configuração ──────────────────────────────────────────────────────────
   // O BASE é a URL raiz do repo (sem trailing slash) — onde estão os assets e o
   // bundle do Design System. O atributo data-base do #caicara-page sobrescreve.
-  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.7";
+  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.8";
   var DS_NS = "CaiAraDesignSystem_096654";
 
   // ── 1. Helpers ──────────────────────────────────────────────────────────────
@@ -602,7 +602,7 @@
           overline: "Santos · SP · Brasil",
           title: "Seu porto seguro no",
           emphasis: "marketing digital",
-          lead: "Estratégias personalizadas e amparadas em IA para PMEs que querem crescer no litoral — e além. Branding e performance no mesmo plano.",
+          lead: "Estratégia sob medida pra PMEs do litoral que querem crescer com método — começa pelo diagnóstico do seu cenário, não pelo pacote. Coordenamos o que faz sentido: branding, performance, plataforma ou parceiros curados. Amparado em IA, decidido por gente.",
           actions: el(React.Fragment, null,
             h(Button, { size: "lg", onClick: function () { navigateToPage("contato"); } }, "Agendar diagnóstico"),
             h(Button, { size: "lg", variant: "outline", onClick: function () { navigateToPage("cases"); } }, "Ver cases")
@@ -729,7 +729,7 @@
         items: ["Tudo do Farol", "Google Ads e Meta Ads", "Landing page de captação", "Automação de WhatsApp", "Reunião estratégica quinzenal"],
         accent: "magenta", featured: true },
       { name: "Leme", tag: "Operação completa", price: "sob consulta",
-        items: ["Tudo da Bússola", "BOT Criativo configurado", "Portal Caiçara com mensageria", "Branding e identidade visual", "Squad dedicado"],
+        items: ["Tudo da Bússola", "BOT Criativo configurado", "Portal Caiçara com mensageria", "Branding e identidade visual", "Squad sob medida"],
         accent: "violet" }
     ];
     var ALL = [
@@ -1170,13 +1170,13 @@
               fontWeight: "var(--fw-bold)", lineHeight: "var(--lh-tight)", letterSpacing: "var(--ls-tighter)",
               maxWidth: 880
             }
-          }, "Quem está ao leme"),
+          }, "Quem decide a rota"),
           h("p", {
             style: {
               margin: "var(--space-6) 0 0", fontSize: "var(--fs-lg)", lineHeight: "var(--lh-body)",
               color: "rgba(253,248,242,.78)", maxWidth: 720
             }
-          }, "A tripulação da Caiçara é pequena, mas cabe no barco inteiro. Estratégia, criação, performance e plataforma no mesmo plano de navegação — sem terceirizar o que importa.")
+          }, "Time pequeno de cabeças pensantes. Coordenamos os recursos certos pra cada cenário — equipe interna, plataforma ou parceiros curados — sempre começando pelo diagnóstico, nunca pelo pacote. É por isso que a Caiçara é Estratégico.")
         )
       ),
 

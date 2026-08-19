@@ -1,6 +1,6 @@
 # Caiçara · Site institucional — Handoff
 
-> Documento de continuação entre sessões. Última atualização: **v1.0.6** (19/08/2026).
+> Documento de continuação entre sessões. Última atualização: **v1.0.8** (19/08/2026).
 > A próxima sessão deve ler este arquivo inteiro antes de tocar em qualquer coisa.
 
 ---
@@ -9,16 +9,16 @@
 
 | Componente | Estado | Versão |
 |---|---|---|
-| Repo `mhprol/caicara-site` | público, tags `v1.0.0`..`v1.0.6` | v1.0.6 ✓ |
-| `dist/site.js` (React app) | production-ready, ~70KB | v1.0.6 |
-| `dist/site.css` (tokens + reset + media queries) | production-ready, ~22KB | v1.0.6 |
-| `dist/ds-bundle.js` (Design System) | verbatim copy, 185KB | v1.0.6 |
-| `og/*.png` (8 imagens 1200×630) | commitadas, 100–250KB cada | v1.0.6 |
-| `llms.txt`, `robots.txt`, `sitemap.xml` | commitados | v1.0.6 |
-| GHL staging `staging.caicaramarketing.com.br` | **em v1.0.5** — atualizar pra v1.0.6 (ver §4) | v1.0.5 |
+| Repo `mhprol/caicara-site` | público, tags `v1.0.0`..`v1.0.8` | v1.0.8 ✓ |
+| `dist/site.js` (React app) | production-ready, ~70KB | v1.0.8 |
+| `dist/site.css` (tokens + reset + media queries) | production-ready, ~22KB | v1.0.8 |
+| `dist/ds-bundle.js` (Design System) | verbatim copy, 185KB | v1.0.8 |
+| `og/*.png` (8 imagens 1200×630) | commitadas, 100–250KB cada | v1.0.8 |
+| `llms.txt`, `robots.txt`, `sitemap.xml` | commitados | v1.0.8 |
+| GHL staging `staging.caicaramarketing.com.br` | **em v1.0.5** — atualizar pra v1.0.8 (ver §4) | v1.0.5 |
 | GHL produção `caicaramarketing.com.br` | **não deployado** | — |
 
-**Última sessão**: 4 fixes (navbar glass sempre, hamburger magenta, footer overflow, logo footer 40px) — bump pra v1.0.6.
+**Última sessão**: 4 fixes (navbar glass sempre, hamburger magenta, footer overflow, logo footer 40px) + fix LinkedIn URL + copy shift (ângulo novo em /sobre, /servicos, /home) — bumps v1.0.6, v1.0.7, v1.0.8.
 
 ---
 
@@ -230,6 +230,8 @@ git push origin main --tags
 | v1.0.4 | Mobile layout overhaul: hamburger menu, grids stack, typography scaled |
 | v1.0.5 | Fix bug: mobile menu vaza no desktop, hamburger invisível, footer grid não stackava, BODY files desatualizados |
 | v1.0.6 | Navbar glass em todas as páginas, hamburger magenta-500, footer overflow fix, logo footer 40px |
+| v1.0.7 | LinkedIn URL fix (slug correto + br. subdomain) |
+| v1.0.8 | Copy shift — ângulo novo: Caiçara coordena recursos (não "equipe dedicada") |
 
 ---
 
@@ -474,11 +476,11 @@ Verificação em staging GHL pós-deploy pendente (Matheus cola os 19 blocos nov
 
 ---
 
-## 13. Pra próxima sessão começar (v1.0.6+)
+## 13. Pra próxima sessão começar (v1.0.8+)
 
-1. Lê este HANDOFF.md inteiro (especialmente §11 e §12)
+1. Lê este HANDOFF.md inteiro (especialmente §11, §12, §14)
 2. Lê README.md (setup do GHL)
-3. **Antes de qualquer coisa**: verifica se o GHL staging foi atualizado pra v1.0.6:
+3. **Antes de qualquer coisa**: verifica se o GHL staging foi atualizado pra v1.0.8:
    ```
    # Script de verificação (não commitado, criar se quiser)
    # Loop: GET em cada uma das 8 URLs e checa qual @v está sendo servida
@@ -494,4 +496,56 @@ Verificação em staging GHL pós-deploy pendente (Matheus cola os 19 blocos nov
 
 ---
 
-_Deploy v1.0.6 feito em 19/08/2026 (sessão ~17:45 → ~18:30). Próxima sessão: verificar se o staging GHL foi atualizado e partir pro próximo item._
+## 14. v1.0.7 + v1.0.8 release notes (19/08/2026)
+
+### 14.1 v1.0.7 — LinkedIn URL fix
+
+**Problema** (Matheus, 19/08 ~17:50): o LinkedIn no footer estava com URL errada em todo o site.
+- Era: `https://linkedin.com/company/caicara-marketing-digital`
+- Agora: `https://br.linkedin.com/company/caicaramarketing` (slug correto + subdomain `br.`)
+
+**Mudança** (`dist/site.js` L453): uma linha, dentro do array de social links no `SiteFooter`.
+
+Bump: 19 arquivos (padrão).
+
+### 14.2 v1.0.8 — Copy shift: ângulo novo (coordenação de recursos)
+
+**Problema** (Matheus, 19/08 ~17:50): a copy do site — especialmente `/sobre` — contradizia o modelo real da Caiçara. O hero do /sobre dizia "sem terceirizar o que importa" enquanto a equipe é 2 pessoas (Camila + Matheus) e o pacote Leme prometia "Squad dedicado". A `memoria_promethia.md` confirma a arquitetura: "Plataforma Caiçara = commodity self-serve + PEMD Canvas = artesanal high-ticket", e que "manter comunicação consistente sem grande equipe" é um dos desafios críticos.
+
+**Novo ângulo** (aprovado por Matheus via ask_user):
+- "Time pequeno de cabeças pensantes, coordenador de recursos sob medida"
+- Diagnóstico antes do pacote (não o contrário)
+- Justificativa do "Estratégico" no nome = pensar + integrar + diagnosticar
+- Recursos: equipe interna + plataforma + parceiros curados, conforme o cenário
+
+**Mudanças** (`dist/site.js`):
+
+| Onde | Antes | Depois |
+|---|---|---|
+| `/sobre` H1 (L1173) | "Quem está ao leme" | "Quem decide a rota" |
+| `/sobre` lead (L1179) | "...sem terceirizar o que importa" | "Time pequeno de cabeças pensantes. Coordenamos os recursos certos pra cada cenário — equipe interna, plataforma ou parceiros curados — sempre começando pelo diagnóstico, nunca pelo pacote. É por isso que a Caiçara é Estratégico." |
+| `/servicos` pacote Leme items (L732) | "Squad dedicado" | "Squad sob medida" |
+| `/home` hero lead (L605) | "Branding e performance no mesmo plano" | "Estratégia sob medida pra PMEs do litoral que querem crescer com método — começa pelo diagnóstico do seu cenário, não pelo pacote. Coordenamos o que faz sentido: branding, performance, plataforma ou parceiros curados. Amparado em IA, decidido por gente." |
+
+**Decisões de Matheus** (ask_user, 19/08 ~18:03):
+1. Escopo: **ângulo novo** em 3 páginas (sobre + servicos + home), não full sweep
+2. Hero do /sobre: **"Quem decide a rota"** (opção 1)
+3. Pacote Leme: **"Squad sob medida"** (opção 1)
+
+**Não tocado** (intencionalmente — coerência):
+- `/metodo` STEPS (4 etapas do PEMD): OK, mantém "diagnóstico honesto" + "ajuste de vela"
+- `/contato` lead: OK, "sempre uma pessoa, nunca um robô" continua válido
+- `/politica-de-privacidade`: OK (legal)
+- `/cases` e `/404`: copy genérica, sem conflito de ângulo
+
+**OG images**: NÃO re-renderizadas (copy só mudou nas páginas; OG é PNG já commitado em v1.0.1). Próxima iteração, se Matheus quiser OG alinhado ao novo ângulo, basta rodar `node scripts/render-og.mjs` e bumpar.
+
+**Verificação**:
+```
+✓ node --check dist/site.js                (sintaxe)
+✓ node scripts/check-version.mjs v1.0.8    (19/19 arquivos)
+```
+
+---
+
+_Deploys v1.0.7 e v1.0.8 feitos em 19/08/2026 (sessão ~17:50 → ~18:15). Próxima sessão: verificar staging GHL atualizado, avaliar se a copy nova está performando, e partir pro próximo item (LGPD cookie banner é o top priority pendente)._
