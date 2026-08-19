@@ -250,7 +250,14 @@ git push origin main --tags
 
 ## 11. Próximas iterações (sessão 19/08/2026)
 
-4 itens identificados no final da sessão. Os 3 últimos são **bugs a corrigir** na próxima iteração; o primeiro é **design spec a preservar**.
+4 itens identificados no final da sessão. Todos são **bugs a corrigir** na próxima iteração. Resumo:
+
+| § | Tipo | Item |
+|---|---|---|
+| 11.1 | 🐛 **FIX** | Navbar translúcido em **TODAS** as páginas (consistência visual). Remover `pageKey === "home"` e sempre usar `glass-bg` + `glass-blur` |
+| 11.2 | 🐛 **FIX** | Hamburger icon sem cor de destaque. Mudar `color: 'var(--text-heading)'` para `var(--magenta-500)'` (combina com 11.1: agora burger é sempre sobre fundo claro, accent faz sentido) |
+| 11.3 | 🐛 **FIX** | Footer com overflow horizontal no mobile. Adicionar `wordBreak: break-word` no span do copyright + investigar outras causas |
+| 11.4 | 🐛 **FIX** | Logo do footer muito pequena no desktop. `height: 32` → `40` (ou `clamp()`) |
 
 ### 11.1 🐛 FIX — Navbar translúcido em TODAS as páginas (consistência visual)
 
