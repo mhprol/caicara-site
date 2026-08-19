@@ -33,7 +33,7 @@ npm-debug.log*
 # Dev tools (not part of the production repo)
 test-preview.html
 check-icons.mjs
-
-# Dev tools (NAO sao parte do site de producao)
-check-staging.mjs
 staging.html
+
+# Dev tools versionados (mesma pratica de check-version.mjs e render-og.mjs):
+# scripts/build.mjs, scripts/optimize-images.mjs, scripts/check-staging.mjs

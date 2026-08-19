@@ -1,6 +1,6 @@
 # Caiçara · Site institucional — Handoff
 
-> Documento de continuação entre sessões. Última atualização: **v1.0.9** (19/08/2026).
+> Documento de continuação entre sessões. Última atualização: **v1.0.10** (19/08/2026).
 > A próxima sessão deve ler este arquivo inteiro antes de tocar em qualquer coisa.
 
 ---
@@ -9,7 +9,7 @@
 
 | Componente | Estado | Versão |
 |---|---|---|
-| Repo `mhprol/caicara-site` | público, tags `v1.0.0`..`v1.0.9` | v1.0.9 ✓ |
+| Repo `mhprol/caicara-site` | público, tags `v1.0.0`..`v1.0.10` | v1.0.10 ✓ |
 | `dist/site.js` (React app) | production-ready, minified, **50.7KB** | v1.0.9 |
 | `dist/site.css` (tokens + reset + media queries) | production-ready, ~22KB | v1.0.9 |
 | `dist/ds-bundle.js` (Design System) | minified, **121.9KB** | v1.0.9 |
@@ -18,7 +18,7 @@
 | `assets/imagery/*.webp` (7 arquivos) | **otimizados** (-97% no maior) | v1.0.9 |
 | `assets/photography/*.webp` (19 arquivos) | **otimizados** (-93% no maior) | v1.0.9 |
 | `assets/logo/*.webp` (8 logos) | **convertidos de PNG pra WebP** | v1.0.9 |
-| GHL staging `staging.caicaramarketing.com.br` | **em v1.0.5** — atualizar pra v1.0.9 (ver §4) | v1.0.5 |
+| GHL staging `staging.caicaramarketing.com.br` | **em v1.0.5** — atualizar pra v1.0.10 (ver §4) | v1.0.5 |
 | GHL produção `caicaramarketing.com.br` | **não deployado** | — |
 
 **Última sessão**: 4 fixes (navbar glass sempre, hamburger magenta, footer overflow, logo footer 40px) + fix LinkedIn URL + copy shift (ângulo novo em /sobre, /servicos, /home) + **performance tier 1** (imagens, minify, preconnects, width/height) — bumps v1.0.6, v1.0.7, v1.0.8, v1.0.9.
@@ -236,6 +236,7 @@ git push origin main --tags
 | v1.0.7 | LinkedIn URL fix (slug correto + br. subdomain) |
 | v1.0.8 | Copy shift — ângulo novo: Caiçara coordena recursos (não "equipe dedicada") |
 | v1.0.9 | Performance Tier 1: imagens otimizadas (-11.5MB), JS minificado (-92KB), preconnects corrigidos, width/height |
+| v1.0.10 | Dev tool: scripts/check-staging.mjs (validador de 8 páginas); HANDOFF §16 com roadmap Tier 2/3 |
 
 ---
 
@@ -666,3 +667,106 @@ CLS esperado: 0.027 → **~0** (margem segura).
 ---
 
 _Deploys v1.0.6 → v1.0.9 feitos em 19/08/2026 (sessão ~17:45 → ~18:30). Última ação: bump v1.0.9 com Tier 1 de performance. Próxima sessão: validar ganho no PSI, e se OK, partir pro Tier 2 ou LGPD cookie banner._
+
+---
+
+## 16. Roadmap de performance (Tier 2 + Tier 3) e outras pendências
+
+Estado pós v1.0.9: **Tier 1 entregue**. Aguardando deploy no GHL staging pra medir o ganho real (Matheus está colando os 19 blocos).
+
+### 16.1 Próximos passos imediatos (não-performance)
+
+| # | Pendência | Owner | Esforço |
+|---|---|---|---|
+| A | Colar 19 blocos GHL v1.0.9 + rodar `node scripts/check-staging.mjs` | Matheus | 15min |
+| B | Configurar GHL chat widget pra defer/after-idle | Matheus (admin) | 10min |
+| C | Rodar PageSpeed Insights de novo e arquivar em `audits/PageSpeedInsights_v1.0.9_*.pdf` | Matheus | 5min |
+| D | **LGPD cookie banner** — implementação completa (modal + consent storage + opt-in/opt-out analytics) | próxima sessão | 2-3h |
+| E | **Analytics** — escolher entre GA4 ou Plausible, configurar tag no site-wide HEADER | próxima sessão | 1h |
+| F | Re-renderizar OG images alinhadas com o novo ângulo de copy (`npm run render:og` após ajustar objeto PAGES no script) | próxima sessão | 30min |
+
+### 16.2 Tier 2 — Performance médio (1-2 sessões, +5-10 pontos mobile)
+
+Estimativa de impacto: mobile 72-80 → **82-88**.
+
+| # | Ação | Esforço | Impacto estimado |
+|---|---|---|---|
+| T2.1 | **Code-split `ds-bundle.js` por página** — extrair só os componentes que cada página usa. `ds-bundle.js` é 185KB raw mas só ~30KB transferido por página (-17KB não usados). Com code-split, cai pra ~10-15KB por página | 3-4h | -50KB JS médio, parse time -40% |
+| T2.2 | **Self-host font Montserrat** (woff2 local em `assets/fonts/`) — elimina dep `fonts.gstatic.com` e `bunny.net`, elimina 1 preconnect, 1 DNS lookup, 1 TCP handshake | 2h (download font + atualizar CSS) | LCP -800ms mobile, 1 less preconnect |
+| T2.3 | **Defer GHL chat widget** (admin) — cair 556KB do critical path. Config no GHL: Settings → Chat Widget → "Show on" + "Load delay" 3-5s | 10min (admin) | TBT -10ms, payload -556KB no FCP |
+| T2.4 | **`<link rel="preload">` site.css** — começar a carregar antes de o browser descobrir via tag link | 10min | FCP -200ms |
+| T2.5 | **`<link rel="modulepreload">` React + Lucide** — preload só funciona pra ESM, mas a UMD atual não suporta. Alternativa: `<link rel="preload" as="script">` | 15min | TBT -20ms |
+| T2.6 | **`fetchpriority="high"` em todas as imagens LCP** (não só do /sobre) — heurística: primeira `<img>` da primeira `Section` de cada página | 30min | LCP -200-400ms por página |
+| T2.7 | **`<link rel="prefetch">` da próxima página** quando hover em link de nav (sutil) | 2h | navegação instantânea |
+
+### 16.3 Tier 3 — Estrutural (2-4 sessões, +10-15 pontos mobile)
+
+Estimativa de impacto: mobile 82-88 → **92-98**, desktop 85-90 → 95+.
+
+| # | Ação | Esforço | Impacto estimado |
+|---|---|---|---|
+| T3.1 | **Migrar todas as imagens pra AVIF** com fallback WebP (`<picture>` com `<source>`) | 2-3h (gerar AVIFs + reescrever markup) | -50% no tamanho vs WebP (~2MB savings) |
+| T3.2 | **Converter `ds-bundle.js` pra ESM modules** (tree-shaking nativo via Vite ou esbuild bundle) | 1 dia | -60% bundle size (-70KB) |
+| T3.3 | **Migrar pra Vite + React SSR (SSG)** — pré-renderizar HTML no build, mata o waterfall de React.load → render | 1-2 dias (refactor grande) | **LCP -3-4s** (maior impacto isolado) |
+| T3.4 | **Inline critical CSS** no HEAD (extrair above-the-fold com `critical` ou Penthouse) | 3-4h | FCP -400ms |
+| T3.5 | **Service worker** (`workbox-strategies`) — cache de repeat visits + offline fallback | 4-6h | repeat-visit LCP <1s |
+| T3.6 | **HTTP/3 / QUIC tuning** (se Cloudflare estiver na frente do GHL) | depende | TLS handshake -200ms |
+
+### 16.4 Decisão arquitetural: SSR/SSG (T3.3) ou não?
+
+**Vale a pena** se:
+- Mobile PSI > 90 virar requirement (ex: cliente quer ser Top 1% no setor)
+- Volume de tráfego justificar o investimento (atualmente baixo, conforme `memoria_promethia.md`)
+- Você quiser abrir caminho pra PWA real + offline-first
+
+**Não vale a pena agora** se:
+- Score 85+ (Tier 1+2) já atende
+- Volume de tráfego baixo (PEM com 10 clientes ativos, ticket R$2.000/mês — site institucional, não ecommerce)
+- A complexidade operacional (build system, deploy CI/CD) for maior que o ganho
+
+**Minha recomendação**: ficar no Tier 2 (sem SSR). O ROI de 1-2 dias de trabalho pra ganhar 10 pontos no score não bate com o estágio do negócio. Se um dia virar ecommerce ou hub de conteúdo, aí sim justifica o SSR.
+
+### 16.5 Stack recomendado pra futuro (se T3.3 for ativado)
+
+- **Astro** (recomendado) — gerador de sites estáticos que suporta React islands. Pré-renderiza tudo, só hidrata onde precisa. Mais simples que Next.js pro caso de uso.
+- **Vite + React + vite-plugin-ssr** — mais flexível, mais código de boilerplate
+- **Next.js** — overkill pra site institucional, mas é o caminho se um dia precisar de server-side features (API routes, auth server-side, ISR)
+
+### 16.6 Cronograma sugerido (próximas 2-3 sessões)
+
+| Sessão | Foco | Entregas |
+|---|---|---|
+| Sessão 1 (~2h) | Validar v1.0.9 + Tier 2 quick wins | Deploy v1.0.9 → PSI novo arquivado → T2.2 (self-host font) + T2.3 (defer chat) + T2.4 (preload CSS) |
+| Sessão 2 (~3h) | Code-split + LGPD | T2.1 (code-split DS) + início do LGPD cookie banner (D) |
+| Sessão 3 (~2-3h) | LGPD + Analytics + re-render OG | Finalizar LGPD (D) + Analytics (E) + OG re-render (F) |
+
+Após isso: re-medir PSI e decidir se Tier 3 vale a pena.
+
+### 16.7 Script `check-staging.mjs` (commitado em preparação, sem bump)
+
+Pendente desde v1.0.0 — criado agora pra Matheus validar a colagem no GHL. Uso:
+
+```bash
+node scripts/check-staging.mjs              # checa v1.0.9 (default)
+node scripts/check-staging.mjs <url> <tag>  # checa qualquer base/tag
+```
+
+**Exit codes**:
+- 0 = todas as 8 páginas em conformidade
+- 1 = alguma página fora da tag esperada (lista as que faltam)
+
+Útil em CI também: pode ser plugado em GitHub Actions no `push` pra auto-checar staging.
+
+### 16.8 Pré-requisito pra próxima sessão
+
+Matheus:
+1. ✅ Colou 19 blocos GHL v1.0.9
+2. ✅ Rodou `node scripts/check-staging.mjs` — todas OK em v1.0.9
+3. ✅ Salvou novo PSI em `audits/PageSpeedInsights_v1.0.9_*.pdf`
+4. 🆕 (opcional) Configurou GHL chat defer
+
+Próxima sessão começa lendo §15.7 (resultado esperado vs real) e §16.1 (pendências não-performance) — confirma se a copy v1.0.8 + Tier 1 performou como esperado, e decide se vai pra Tier 2 ou prioriza LGPD.
+
+---
+
+_Deploys v1.0.6 → v1.0.9 feitos em 19/08/2026 (sessão ~17:45 → ~18:30). Próxima sessão: deploy do v1.0.9 no GHL staging validado + decisão Tier 2 vs LGPD._
