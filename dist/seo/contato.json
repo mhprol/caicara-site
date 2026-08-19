@@ -1,0 +1,44 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://caicaramarketing.com.br/" },
+        { "@type": "ListItem", "position": 2, "name": "Contato", "item": "https://caicaramarketing.com.br/contato" }
+      ]
+    },
+    {
+      "@type": "ContactPage",
+      "name": "Contato — Caiçara Marketing",
+      "description": "Fale com a tripulação da Caiçara. Diagnóstico de 30 minutos, sem compromisso.",
+      "url": "https://caicaramarketing.com.br/contato",
+      "inLanguage": "pt-BR",
+      "isPartOf": { "@id": "https://caicaramarketing.com.br/#website" },
+      "about": { "@id": "https://caicaramarketing.com.br/#organization" }
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://caicaramarketing.com.br/#contact-business",
+      "name": "Caiçara Marketing Digital Estratégico",
+      "image": "https://caicara-site.vercel.app/og/home.png",
+      "telephone": "+55-13-97806-2772",
+      "email": "contato@caicaramarketing.com.br",
+      "url": "https://caicaramarketing.com.br/contato",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Santos",
+        "addressRegion": "SP",
+        "addressCountry": "BR"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      ]
+    }
+  ]
+}

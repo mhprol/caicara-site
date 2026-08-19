@@ -1,0 +1,59 @@
+# Caiçara Marketing Digital — robots.txt
+# https://caicaramarketing.com.br/robots.txt
+#
+# Política: deixamos todos os crawlers bem-vindos. As únicas exceções são
+# endpoints internos de admin (que não são públicos via este site) e a
+# página 404 (marcada com noindex no HTML). Crawlers de LLMs estão
+# explicitamente liberados.
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap canônico
+Sitemap: https://caicaramarketing.com.br/sitemap.xml
+
+# Crawlers de IA/LLM — explicitamente bem-vindos para fins de citação
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Crawlers comuns — sem regras especiais
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /

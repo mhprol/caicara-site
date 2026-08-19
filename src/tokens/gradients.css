@@ -1,0 +1,28 @@
+/* ── Caiçara · Gradientes e texturas ─────────────────────────────────────────
+   The signature device is the logo gradient: magenta → violet → cyan, read
+   left-to-right like the mark itself. Used as a 3px "waterline" rule (letter-
+   head footer, section dividers), as a thin top edge on dark panels, and — very
+   sparingly — as a fill behind the symbol. It is NOT a page background.       */
+:root {
+  --gradient-brand: linear-gradient(90deg, #e3286c 0%, #543e8d 52%, #00a5d7 100%); /* @kind other */
+  --gradient-brand-diagonal: linear-gradient(135deg, #e3286c 0%, #543e8d 52%, #00a5d7 100%); /* @kind other */
+  --gradient-brand-vertical: linear-gradient(180deg, #e3286c 0%, #543e8d 52%, #00a5d7 100%); /* @kind other */
+  --gradient-brand-reverse: linear-gradient(90deg, #00a5d7 0%, #543e8d 48%, #e3286c 100%); /* @kind other */
+
+  /* Deep institutional wash for dark sections (hero, footer, portal rail) */
+  --gradient-deep: linear-gradient(160deg, #28144c 0%, #1a0d33 62%, #130a25 100%); /* @kind other */
+  --gradient-deep-violet: linear-gradient(160deg, #3a2b60 0%, #28144c 100%); /* @kind other */
+
+  /* Text fill for a single emphasised word — never a whole heading */
+  --gradient-text: linear-gradient(92deg, #e3286c 0%, #543e8d 55%, #00a5d7 100%); /* @kind other */
+
+  /* Pixel/dither texture: the mark's edges are pixelated, and the letterhead
+     repeats that as a faint square grid in the corners. 1 square per 24px. */
+  --texture-pixel: repeating-conic-gradient(from 0deg at 50% 50%, rgba(40, 20, 76, 0.035) 0deg 90deg, transparent 90deg 180deg); /* @kind other */
+  --texture-pixel-size: 24px 24px; /* @kind other */
+  --texture-pixel-on-deep: repeating-conic-gradient(from 0deg at 50% 50%, rgba(255, 255, 255, 0.04) 0deg 90deg, transparent 90deg 180deg); /* @kind other */
+
+  /* Dot grid — the workflow canvas in the client portal */
+  --texture-dotgrid: radial-gradient(rgba(40, 20, 76, 0.14) 1px, transparent 1px); /* @kind other */
+  --texture-dotgrid-size: 16px 16px; /* @kind other */
+}

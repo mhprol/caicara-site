@@ -1,0 +1,28 @@
+/* ── Caiçara · Elevação ───────────────────────────────────────────────────────
+   Shadows are always tinted with the deep violet (never neutral black) so
+   surfaces read as paper lit over water, not as material-design cards.       */
+:root {
+  --shadow-none: none;
+  --shadow-xs: 0 1px 2px rgba(40, 20, 76, 0.06);
+  --shadow-sm: 0 1px 3px rgba(40, 20, 76, 0.08), 0 1px 2px rgba(40, 20, 76, 0.04);
+  --shadow-md: 0 4px 12px rgba(40, 20, 76, 0.09), 0 1px 3px rgba(40, 20, 76, 0.05);
+  --shadow-lg: 0 12px 32px rgba(40, 20, 76, 0.12), 0 2px 6px rgba(40, 20, 76, 0.06);
+  --shadow-xl: 0 28px 64px rgba(40, 20, 76, 0.18), 0 4px 12px rgba(40, 20, 76, 0.08);
+
+  /* Coloured lifts — used on primary CTAs and on hovered accent surfaces */
+  --shadow-magenta: 0 8px 24px rgba(227, 40, 108, 0.28);
+  --shadow-cyan: 0 8px 24px rgba(0, 165, 215, 0.26);
+
+  /* Inset — pressed fields and the recessed search box in the portal */
+  --shadow-inset: inset 0 1px 2px rgba(40, 20, 76, 0.08);
+
+  /* Protection gradient: laid under text on full-bleed photography.
+     Always bottom-up, always the deep violet — never plain black. */
+  --scrim-bottom: linear-gradient(to top, rgba(19, 10, 37, 0.92) 0%, rgba(19, 10, 37, 0.66) 38%, rgba(19, 10, 37, 0) 100%); /* @kind other */
+  --scrim-full: linear-gradient(to top, rgba(19, 10, 37, 0.88) 0%, rgba(19, 10, 37, 0.5) 100%); /* @kind other */
+
+  /* Glass capsule — the alternative to a scrim when text sits mid-image */
+  --glass-bg: rgba(253, 248, 242, 0.16);
+  --glass-border: 1px solid rgba(253, 248, 242, 0.28); /* @kind other */
+  --glass-blur: blur(14px) saturate(1.1); /* @kind other */
+}

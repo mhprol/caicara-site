@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build output (not used; site.css is hand-authored)
+build/
+dist/build/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+*.lnk
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local environment
+.env
+.env.local
+
+# OG images are generated, not committed in v1.0.0
+# (uncomment the next line if you want to ignore them after generation)
+# og/*.png

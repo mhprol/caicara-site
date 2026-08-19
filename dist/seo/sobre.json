@@ -1,0 +1,34 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://caicaramarketing.com.br/" },
+        { "@type": "ListItem", "position": 2, "name": "A Caiçara", "item": "https://caicaramarketing.com.br/sobre" }
+      ]
+    },
+    {
+      "@type": "AboutPage",
+      "name": "A Caiçara — Quem está ao leme",
+      "description": "Conheça a tripulação da Caiçara Marketing: propósito, valores e a equipe que une a tradição caiçara com a inovação digital.",
+      "url": "https://caicaramarketing.com.br/sobre",
+      "inLanguage": "pt-BR",
+      "isPartOf": { "@id": "https://caicaramarketing.com.br/#website" },
+      "about": { "@id": "https://caicaramarketing.com.br/#organization" },
+      "mainEntity": {
+        "@type": "Organization",
+        "@id": "https://caicaramarketing.com.br/#organization",
+        "founder": [
+          { "@type": "Person", "name": "Camila Prol", "jobTitle": "Estratégia · Conteúdo" },
+          { "@type": "Person", "name": "Matheus Prol", "jobTitle": "Performance · Tecnologia" }
+        ],
+        "foundingDate": "2024",
+        "founders": [
+          { "@type": "Person", "name": "Camila Prol" },
+          { "@type": "Person", "name": "Matheus Prol" }
+        ]
+      }
+    }
+  ]
+}

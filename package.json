@@ -1,0 +1,17 @@
+{
+  "name": "caicara-site",
+  "version": "1.0.0",
+  "description": "Site institucional Caiçara Marketing Digital — assets e blocos GHL servidos via jsDelivr",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "render:og": "node scripts/render-og.mjs",
+    "deploy:check": "node scripts/check-version.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.33.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

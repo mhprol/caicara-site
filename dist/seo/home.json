@@ -1,0 +1,78 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Organization", "LocalBusiness"],
+      "@id": "https://caicaramarketing.com.br/#organization",
+      "name": "Caiçara Marketing Digital Estratégico",
+      "alternateName": "Caiçara Marketing",
+      "url": "https://caicaramarketing.com.br",
+      "logo": "https://caicara-site.vercel.app/og/default.png",
+      "image": "https://caicara-site.vercel.app/og/home.png",
+      "description": "Agência de marketing digital estratégico de Santos, SP. Branding, performance, conteúdo e automação para PMEs do litoral de São Paulo.",
+      "telephone": "+55-13-97806-2772",
+      "email": "contato@caicaramarketing.com.br",
+      "priceRange": "R$ 1490 - R$ 5000+/mês",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Santos",
+        "addressLocality": "Santos",
+        "addressRegion": "SP",
+        "postalCode": "11000-000",
+        "addressCountry": "BR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -23.9608,
+        "longitude": -46.3331
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Santos" },
+        { "@type": "City", "name": "São Vicente" },
+        { "@type": "City", "name": "Guarujá" },
+        { "@type": "City", "name": "Praia Grande" },
+        { "@type": "AdministrativeArea", "name": "Baixada Santista" },
+        { "@type": "AdministrativeArea", "name": "Litoral de São Paulo" }
+      ],
+      "sameAs": [
+        "https://instagram.com/caicaramarketing"
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      ],
+      "knowsAbout": [
+        "Marketing digital",
+        "Branding",
+        "Google Ads",
+        "Meta Ads",
+        "SEO local",
+        "Automação de marketing",
+        "Gestão de mídias sociais",
+        "Consultoria estratégica",
+        "PEMD"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://caicaramarketing.com.br/#website",
+      "url": "https://caicaramarketing.com.br",
+      "name": "Caiçara Marketing Digital Estratégico",
+      "description": "Seu porto seguro no marketing digital. Estratégia, criação e automação para PMEs de Santos e do litoral de São Paulo.",
+      "publisher": { "@id": "https://caicaramarketing.com.br/#organization" },
+      "inLanguage": "pt-BR",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://caicaramarketing.com.br/?s={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}

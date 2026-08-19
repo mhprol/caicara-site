@@ -1,0 +1,89 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://caicaramarketing.com.br/" },
+        { "@type": "ListItem", "position": 2, "name": "Método PEMD", "item": "https://caicaramarketing.com.br/metodo" }
+      ]
+    },
+    {
+      "@type": "Article",
+      "headline": "Método PEMD — Do diagnóstico ao destino, em quatro etapas",
+      "description": "O PEMD é o jeito Caiçara de trabalhar: Setup, Onde estamos, Para onde vamos, Como vamos chegar lá. Quatro etapas, na ordem, sempre.",
+      "author": { "@id": "https://caicaramarketing.com.br/#organization" },
+      "publisher": { "@id": "https://caicaramarketing.com.br/#organization" },
+      "datePublished": "2026-01-15",
+      "dateModified": "2026-08-19",
+      "inLanguage": "pt-BR",
+      "mainEntityOfPage": "https://caicaramarketing.com.br/metodo"
+    },
+    {
+      "@type": "HowTo",
+      "name": "Como a Caiçara entrega resultado com o Método PEMD",
+      "description": "Quatro etapas para tirar uma marca do diagnóstico e levá-la ao destino — com responsável, prazo e métrica em cada uma.",
+      "totalTime": "P90D",
+      "estimatedCost": { "@type": "MonetaryAmount", "currency": "BRL", "minValue": 1490, "maxValue": 5000 },
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Setup",
+          "text": "Acessos, ferramentas e medição no lugar. Instalamos o que falta e ligamos o painel — sem dado confiável não existe rota.",
+          "url": "https://caicaramarketing.com.br/metodo#setup"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Onde estamos",
+          "text": "Diagnóstico honesto de marca, presença digital e funil. Mergulhamos fundo, inclusive no que não está funcionando.",
+          "url": "https://caicaramarketing.com.br/metodo#onde-estamos"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Para onde vamos",
+          "text": "Metas, personas e a definição clara do que é sucesso nos próximos 90 dias. Você aprova antes de a gente executar.",
+          "url": "https://caicaramarketing.com.br/metodo#para-onde-vamos"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Como vamos chegar lá",
+          "text": "O plano com responsáveis, prazos e orçamento. Depois é execução, medição e ajuste de vela conforme o vento.",
+          "url": "https://caicaramarketing.com.br/metodo#como-vamos-chegar-la"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "O que é o Método PEMD?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PEMD é a metodologia própria da Caiçara, com quatro etapas aplicadas em ordem: Setup, Onde estamos, Para onde vamos, Como vamos chegar lá. É o jeito Caiçara de garantir que diagnóstico precede execução — plano sem diagnóstico é chute com apresentação bonita."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto tempo leva um projeto pelo PEMD?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O ciclo completo de 90 dias cobre as quatro etapas e entrega o primeiro plano de execução com KPIs definidos. O trabalho de performance e marca continua em ciclos trimestrais subsequentes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "O PEMD funciona para qualquer tipo de empresa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Foi desenhado para pequenas e médias empresas (PMEs) de Santos e do litoral de São Paulo. Atende bem comerciantes locais, prestadores de serviço e empreendedores em transição digital — os três perfis para os quais a Caiçara foi construída."
+          }
+        }
+      ]
+    }
+  ]
+}

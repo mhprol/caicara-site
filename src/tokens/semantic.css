@@ -1,0 +1,106 @@
+/* ── Caiçara · Aliases semânticos ─────────────────────────────────────────────
+   Everything a component should reference. Components must not use base ramp
+   tokens directly except for one-off decorative fills.                        */
+:root {
+  /* Surfaces */
+  --surface-page: var(--sand-500);
+  --surface-page-alt: var(--sand-100);
+  --surface-card: var(--white);
+  --surface-card-muted: var(--sand-100);
+  --surface-raised: var(--white);
+  --surface-sunken: var(--sand-200);
+  --surface-deep: var(--deep-500);
+  --surface-deep-alt: var(--deep-700);
+  --surface-accent: var(--magenta-500);
+  --surface-accent-soft: var(--magenta-050);
+  --surface-cyan-soft: var(--cyan-050);
+  --surface-violet-soft: var(--violet-050);
+  --surface-overlay: rgba(19, 10, 37, 0.62);
+
+  /* Text */
+  --text-heading: var(--deep-500);
+  --text-body: var(--neutral-700);
+  --text-muted: var(--neutral-500);
+  --text-subtle: var(--sand-400);
+  --text-inverse: var(--sand-500);
+  --text-inverse-muted: rgba(253, 248, 242, 0.68);
+  --text-accent: var(--magenta-600);
+  --text-link: var(--cyan-600);
+  --text-link-hover: var(--magenta-600);
+  --text-on-accent: var(--white);
+
+  /* Borders */
+  --border-subtle: var(--sand-200);
+  --border-default: var(--sand-300);
+  --border-strong: var(--neutral-500);
+  --border-accent: var(--magenta-500);
+  --border-inverse: rgba(253, 248, 242, 0.16);
+
+  /* Interactive — primary (magenta) */
+  --action-primary-bg: var(--magenta-500);
+  --action-primary-bg-hover: var(--magenta-600);
+  --action-primary-bg-active: var(--magenta-700);
+  --action-primary-fg: var(--white);
+
+  /* Interactive — secondary (deep violet) */
+  --action-secondary-bg: var(--deep-500);
+  --action-secondary-bg-hover: var(--deep-400);
+  --action-secondary-bg-active: var(--deep-700);
+  --action-secondary-fg: var(--sand-500);
+
+  /* Interactive — tertiary / outline */
+  --action-outline-border: var(--deep-500);
+  --action-outline-fg: var(--deep-500);
+  --action-outline-bg-hover: var(--violet-050);
+
+  /* Interactive — ghost */
+  --action-ghost-fg: var(--deep-500);
+  --action-ghost-bg-hover: var(--sand-200);
+
+  /* Fields */
+  --field-bg: var(--white);
+  --field-bg-disabled: var(--sand-100);
+  --field-border: var(--sand-300);
+  --field-border-hover: var(--neutral-500);
+  --field-border-focus: var(--cyan-500);
+  --field-fg: var(--neutral-800);
+  --field-placeholder: var(--neutral-500);
+
+  /* Status */
+  --status-success-fg: var(--success-500);
+  --status-success-bg: var(--success-050);
+  --status-warning-fg: var(--warning-500);
+  --status-warning-bg: var(--warning-050);
+  --status-danger-fg: var(--danger-500);
+  --status-danger-bg: var(--danger-050);
+  --status-info-fg: var(--info-500);
+  --status-info-bg: var(--info-050);
+
+  /* Chart / data series — brand-first, in reading order */
+  --data-1: var(--magenta-500);
+  --data-2: var(--cyan-500);
+  --data-3: var(--violet-500);
+  --data-4: var(--cyan-700);
+  --data-5: var(--magenta-300);
+  --data-6: var(--deep-300);
+}
+
+/* Dark scope — used on hero panels, the footer and the portal rail.
+   Apply to a container: <section class="on-deep"> */
+.on-deep {
+  --surface-card: rgba(255, 255, 255, 0.06);
+  --surface-card-muted: rgba(255, 255, 255, 0.04);
+  --text-heading: var(--sand-500);
+  --text-body: rgba(253, 248, 242, 0.78);
+  --text-muted: rgba(253, 248, 242, 0.55);
+  --border-subtle: rgba(253, 248, 242, 0.12);
+  --border-default: rgba(253, 248, 242, 0.2);
+  --text-link: var(--cyan-300);
+  --text-link-hover: var(--magenta-300);
+  --action-ghost-fg: var(--sand-500);
+  --action-ghost-bg-hover: rgba(255, 255, 255, 0.08);
+  --action-outline-border: rgba(253, 248, 242, 0.4);
+  --action-outline-fg: var(--sand-500);
+  --action-outline-bg-hover: rgba(255, 255, 255, 0.08);
+  color: var(--text-body);
+}

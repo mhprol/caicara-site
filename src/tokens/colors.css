@@ -1,0 +1,85 @@
+/* ── Caiçara · Cor ──────────────────────────────────────────────────────────
+   Base palette is taken verbatim from "Paleta de Cores - Caiçara Marketing"
+   (Coolors sheet supplied with the brand assets). Nothing here is invented:
+   the five base hexes are the brand. Ramps are tints/shades of those five.   */
+:root {
+  /* Base — the five brand colours, exact values from the palette sheet */
+  --magenta-500: #e3286c; /* Razzmatazz      — accent primário */
+  --violet-500: #543e8d;  /* Dark Slate Blue — accent secundário */
+  --deep-500: #28144c;    /* Russian Violet  — tinta institucional */
+  --cyan-500: #00a5d7;    /* Cerulean Crayola— accent terciário / mar */
+  --sand-500: #fdf8f2;    /* Floral White    — papel / fundo */
+
+  /* Logo ink — sampled from the supplied SVG mark */
+  --logo-ink: #2c164f;
+
+  /* Magenta ramp */
+  --magenta-050: #fdeef4;
+  --magenta-100: #f9d3e2;
+  --magenta-200: #f3a7c3;
+  --magenta-300: #ed7ba4;
+  --magenta-400: #e84f86;
+  --magenta-600: #c41f5c;
+  --magenta-700: #9e194a;
+  --magenta-800: #771337;
+  --magenta-900: #500c25;
+
+  /* Violet ramp */
+  --violet-050: #f1eef7;
+  --violet-100: #ded7ec;
+  --violet-200: #bdafd9;
+  --violet-300: #9b86c6;
+  --violet-400: #7a5eb3;
+  --violet-600: #473476;
+  --violet-700: #3a2b60;
+  --violet-800: #2e2249;
+  --violet-900: #211833;
+
+  /* Deep ramp — institutional dark, the "mar noturno" */
+  --deep-050: #ece9f1;
+  --deep-100: #d0c9dd;
+  --deep-200: #a196bb;
+  --deep-300: #72639a;
+  --deep-400: #463075;
+  --deep-600: #211141;
+  --deep-700: #1a0d33;
+  --deep-800: #130a25;
+  --deep-900: #0b0616;
+
+  /* Cyan ramp */
+  --cyan-050: #e5f6fc;
+  --cyan-100: #bfe9f7;
+  --cyan-200: #80d3ef;
+  --cyan-300: #40bce6;
+  --cyan-400: #19aede;
+  --cyan-600: #0086ae;
+  --cyan-700: #006785;
+  --cyan-800: #00485d;
+  --cyan-900: #002b38;
+
+  /* Sand / neutral ramp — warm paper neutrals, never cold grey */
+  --sand-025: #fffdfa;
+  --sand-100: #f7f1e9;
+  --sand-200: #ede5da;
+  --sand-300: #ded4c7;
+  --sand-400: #b8ada0;
+  --sand-500-hex: #fdf8f2;
+  --neutral-500: #8a8079;
+  --neutral-600: #6b625c;
+  --neutral-700: #4e4741;
+  --neutral-800: #332e2a;
+  --neutral-900: #1c1917;
+  --white: #ffffff;
+
+  /* Semantic status — derived so they sit inside the brand hue family
+     (no stock green/red imports). Success borrows the cyan-teal side,
+     warning borrows the coral-magenta side. */
+  --success-500: #0f9d8a;
+  --success-050: #e3f6f3;
+  --warning-500: #e8952f;
+  --warning-050: #fdf1e2;
+  --danger-500: #d92d3f;
+  --danger-050: #fce8ea;
+  --info-500: #00a5d7;
+  --info-050: #e5f6fc;
+}

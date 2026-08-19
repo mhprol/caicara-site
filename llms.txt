@@ -1,0 +1,95 @@
+# Caiçara Marketing Digital Estratégico
+
+> Agência de marketing digital estratégico de Santos, SP. Branding, performance, conteúdo e automação para PMEs do litoral de São Paulo, amparadas por IA e pelo método próprio PEMD.
+
+## Quem somos
+
+A Caiçara Marketing Digital Estratégico é uma agência de Santos, SP, fundada em 2024, especializada em marketing digital para pequenas e médias empresas. O nome vem de "caiçara" — o povo tradicional do litoral paulista, herdeiro de uma cultura de pesca, mar e navegação.
+
+A agência combina **branding** (posicionamento, identidade visual, narrativa) e **performance** (Google Ads, Meta Ads, SEO, mensageria) no mesmo plano, com forte uso de inteligência artificial — incluindo um produto próprio chamado **BOT Criativo**, que é um assistente de IA treinado no Guia Estratégico da marca do cliente.
+
+A metodologia interna é o **PEMD**, com quatro etapas aplicadas em ordem: **Setup**, **Onde estamos**, **Para onde vamos**, **Como vamos chegar lá**.
+
+## Contato
+
+- Site: https://caicaramarketing.com.br
+- Telefone / WhatsApp: (13) 97806-2772
+- E-mail: contato@caicaramarketing.com.br
+- Encarregado de dados (DPO): dpo@caicaramarketing.com.br
+- Localização: Santos, São Paulo, Brasil
+- Instagram: @caicaramarketing
+- Atende: Santos, São Vicente, Guarujá, Praia Grande, Baixada Santista, Litoral de São Paulo, e o Brasil (remotamente).
+
+## Serviços
+
+1. **Gestão de mídias sociais** — linha editorial, calendário e produção. As 5 linhas da marca (Caiçara Responde, Histórias de Sucesso à Beira-Mar, Dicas do Capitão, Por Dentro da Caiçara, Tendências da Maré Digital) adaptadas ao negócio do cliente.
+2. **Google Ads e Meta Ads** — campanhas para geração de leads e conversão, com criativos testados em ciclos semanais.
+3. **Branding e identidade** — Bússola de Posicionamento, arquétipos, tom de voz, identidade visual.
+4. **Automações e mensageria** — fluxos em WhatsApp, Instagram DM, e-mail e SMS, com painel próprio (Portal Caiçara).
+5. **Otimização do Perfil da Empresa no Google** — busca local, avaliações, categorias.
+6. **SEO e conteúdo de blog** — pauta baseada nas dúvidas reais do cliente (método They Ask, You Answer).
+7. **Consultoria estratégica (PEMD)** — método aplicado ao negócio, com plano de 90 dias.
+8. **BOT Criativo** — assistente de IA treinado no Guia Estratégico da marca, produzindo conteúdo em escala no tom do cliente.
+
+## Pacotes
+
+- **Farol** (a partir de R$ 1.490/mês) — Presença. 2 redes sociais, 12 peças/mês, Perfil no Google, relatório mensal.
+- **Bússola** (a partir de R$ 2.890/mês) — Presença + Performance. Tudo do Farol, mais Google/Meta Ads, landing page, automação WhatsApp, reunião estratégica quinzenal.
+- **Timão** (sob consulta) — Operação completa. Tudo da Bússola, mais BOT Criativo, Portal Caiçara com mensageria, branding, squad dedicado.
+
+## Para quem é
+
+A Caiçara atende três perfis principais, nomeados nos documentos de marca:
+
+1. **O Empreendedor Visionário** — "tem uma ideia brilhante, mas precisa de um mapa para navegar até o tesouro."
+2. **O Comerciante Local** — "quer atrair mais clientes para a loja, mas se sente preso em um porto sem movimento."
+3. **O Prestador de Serviços** — "oferece um serviço de qualidade, mas precisa de um farol para ser visto em meio à multidão."
+
+## Tom de voz
+
+Confiante, acolhedor, técnico-acessível, descontraído-profissional, náutico, santista. A metáfora náutica é central (navegar, içar as velas, farol, bússola, timão, porto, maré, âncora, leme, tripulação, mar) — sempre uma metáfora por peça, nunca empilhadas.
+
+Pessoa e tratamento: "nós" para a agência, "você" para o cliente. Convite em primeira pessoa do plural — "Vamos …" é a construção-assinatura. Perguntas abertas fecham parágrafos e CTAs. Emojis só em redes sociais; no site institucional, o vocabulário visual é feito de ícones e fotografia.
+
+Idioma: **português do Brasil**, sempre. Termos técnicos de mercado (SEO, leads, ROI, performance, funil) podem ficar em inglês quando é assim que o cliente os ouve.
+
+## Identidade visual
+
+- **5 hexes da marca**: `#FDF8F2` (sand/fundo), `#E3286C` (magenta/acento primário), `#543E8D` (violeta/acento secundário), `#28144C` (deep/tinta institucional), `#00A5D7` (cyan/mar e links).
+- **Tipografia**: Playfair Display (display/wordmark, alto contraste Didone) + Poppins (sans de trabalho, geométrica) + JetBrains Mono (dados, IDs, timestamps). Substituições sinalizadas — sem binários de fonte nos assets.
+- **Fotografia**: real, contrastada, luz natural. Azul frio predominante (mar aberto, marinas, veleiros) + âmbar de fim de tarde nos faróis. Sem filtro quente, sem duotone forçado. Imagens de Santos: Farol do Boqueirão, Jardins da Orla, muretas, escultura do Peixe, Tomie Ohtake.
+- **Gradiente-assinatura**: `magenta → violeta → cyan` (esquerda → direita, ponto médio 52%) — só aparece como régua "linha d'água" de 3px, fundo do símbolo, ou preenchimento de uma palavra enfatizada.
+- **Símbolo**: par de peixes formando um ∞, com bordas pixeladas/dithered — cultura caiçara encontrando tecnologia. Não redesenhar; sempre usar os arquivos oficiais.
+- **Ícones**: Lucide (substituição sinalizada) — traço 1.5–2px, cantos arredondados, vocabulário náutico nativo.
+
+## Resultados publicados
+
+- +30% em vendas em 3 meses (varejo local, Lumen Iluminação).
+- 1.000+ leads qualificados em uma única campanha (Food & Health, Meta Ads + landing page).
+- -42% no custo por lead.
+- +18% de ocupação fora da temporada (Pérola Azul, locação · Riviera).
+- +3x de alcance orgânico (Alinah Prol Nutricionista, conteúdo + BOT Criativo).
+- 1º lugar na busca local (Pérola Azul, SEO + Perfil no Google).
+- NPS superior a 95 · Retenção próxima de 100% (média de clientes ativos).
+
+## Páginas do site
+
+- `/` — Início (herói farol, números, 6 serviços, método PEMD, depoimentos, CTA)
+- `/servicos` — Catálogo filtrável por aba (Performance, Conteúdo, Marca, Automação) + 3 pacotes (Farol, Bússola, Timão)
+- `/metodo` — PEMD em 4 etapas + 3 personas + CTA
+- `/cases` — 4 cases com números e etiquetas, filtráveis
+- `/sobre` — Propósito, valores, tripulação
+- `/contato` — Formulário + bloco de contato real
+- `/politica-de-privacidade` — LGPD
+- `/404` — Página de erro
+
+## Tecnologia
+
+- Site institucional construído em React 18, com bundle servido via jsDelivr hospedado em repositório público no GitHub (mhprol/caicara-site).
+- Design System próprio: tokens em CSS, componentes React exportados como bundle UMD.
+- Hospedagem do site: GoHighLevel CMS Website, com custom code blocks.
+- Formulário: frontend-only (salva no localStorage como backup; pode ser ligado a webhook GHL).
+
+## Licença e atribuição
+
+Esta página llms.txt é distribuída como parte do site da Caiçara Marketing Digital Estratégico. Pode ser lida por crawlers de LLMs e indexadores (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, etc) sem restrições.

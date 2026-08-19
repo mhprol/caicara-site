@@ -1,0 +1,22 @@
+/* ── Caiçara · Movimento ──────────────────────────────────────────────────────
+   The brand moves like water: it eases out long, never bounces, never
+   overshoots. No spring physics, no elastic, no scale-up-past-100%.          */
+:root {
+  --dur-instant: 80ms; /* @kind other */
+  --dur-fast: 140ms; /* @kind other */
+  --dur-base: 220ms; /* @kind other */
+  --dur-slow: 380ms; /* @kind other */
+  --dur-tide: 700ms; /* @kind other */   /* reveal-on-scroll, hero fades */
+
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1); /* @kind other */      /* default */
+  --ease-in-out: cubic-bezier(0.45, 0.05, 0.55, 0.95); /* @kind other */ /* swaps, tabs */
+  --ease-swell: cubic-bezier(0.16, 0.84, 0.28, 1); /* @kind other */     /* long reveals */
+
+  --transition-base: all var(--dur-base) var(--ease-out); /* @kind other */
+  --transition-color: color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+
+  /* Interaction deltas — the whole system uses these two numbers */
+  --press-scale: 0.985; /* @kind other */      /* press = a small settle, never a squash */
+  --hover-lift: -1px; /* @kind other */        /* hover = a 1px rise, plus a colour step */
+  --disabled-opacity: 0.42; /* @kind other */
+}

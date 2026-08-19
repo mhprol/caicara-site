@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "Página não encontrada — Caiçara Marketing",
+      "description": "A página que você procura não está em nenhum porto nosso. Volte para o início ou fale com a tripulação.",
+      "url": "https://caicaramarketing.com.br/404",
+      "inLanguage": "pt-BR",
+      "isPartOf": { "@id": "https://caicaramarketing.com.br/#website" }
+    }
+  ]
+}

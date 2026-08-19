@@ -1,0 +1,8 @@
+/* Caiçara webfonts.
+   SUBSTITUTION NOTICE: no font binaries were supplied with the brand assets.
+   The wordmark is a high-contrast Didone-style serif — Playfair Display is the
+   closest Google Fonts match. The sans in real brand pieces (social quote cards,
+   Facebook cover, contact blocks) is a geometric single-storey-'a' grotesque —
+   Poppins is the closest Google Fonts match. Replace with the licensed originals
+   when available. */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;700&display=swap");

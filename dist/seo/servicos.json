@@ -1,0 +1,46 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://caicaramarketing.com.br/" },
+        { "@type": "ListItem", "position": 2, "name": "Serviços", "item": "https://caicaramarketing.com.br/servicos" }
+      ]
+    },
+    {
+      "@type": "Service",
+      "serviceType": "Marketing digital estratégico",
+      "name": "Serviços de marketing digital — Caiçara",
+      "description": "Branding, gestão de mídias sociais, Google Ads e Meta Ads, automações e mensageria, otimização do Perfil no Google, SEO e BOT Criativo (assistente de IA).",
+      "provider": { "@id": "https://caicaramarketing.com.br/#organization" },
+      "areaServed": [
+        { "@type": "City", "name": "Santos" },
+        { "@type": "AdministrativeArea", "name": "Baixada Santista" },
+        { "@type": "Country", "name": "Brasil" }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Portfólio Caiçara",
+        "itemListElement": [
+          { "@type": "OfferCatalog", "name": "Performance", "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Google Ads e Meta Ads" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Otimização do Perfil no Google" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SEO e conteúdo de blog" } }
+          ]},
+          { "@type": "OfferCatalog", "name": "Conteúdo", "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Gestão de mídias sociais" } }
+          ]},
+          { "@type": "OfferCatalog", "name": "Marca", "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Branding e identidade" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Consultoria estratégica (Método PEMD)" } }
+          ]},
+          { "@type": "OfferCatalog", "name": "Automação", "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automações e mensageria (WhatsApp, Instagram DM, e-mail, SMS)" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "BOT Criativo — assistente de IA" } }
+          ]}
+        ]
+      }
+    }
+  ]
+}
