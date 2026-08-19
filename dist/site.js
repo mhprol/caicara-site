@@ -13,7 +13,7 @@
   // ── 0. Configuração ──────────────────────────────────────────────────────────
   // O BASE é a URL raiz do repo (sem trailing slash) — onde estão os assets e o
   // bundle do Design System. O atributo data-base do #caicara-page sobrescreve.
-  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.0";
+  var FALLBACK_BASE = "https://cdn.jsdelivr.net/gh/mhprol/caicara-site@v1.0.1";
   var DS_NS = "CaiAraDesignSystem_096654";
 
   // ── 1. Helpers ──────────────────────────────────────────────────────────────
@@ -526,7 +526,7 @@
       { name: "Bússola", tag: "Presença + Performance", price: "a partir de R$ 2.890/mês",
         items: ["Tudo do Farol", "Google Ads e Meta Ads", "Landing page de captação", "Automação de WhatsApp", "Reunião estratégica quinzenal"],
         accent: "magenta", featured: true },
-      { name: "Timão", tag: "Operação completa", price: "sob consulta",
+      { name: "Leme", tag: "Operação completa", price: "sob consulta",
         items: ["Tudo da Bússola", "BOT Criativo configurado", "Portal Caiçara com mensageria", "Branding e identidade visual", "Squad dedicado"],
         accent: "violet" }
     ];
@@ -1073,7 +1073,7 @@
   function PagePolitica() {
     var SECTIONS = [
       { h: "1. Quem somos", p: [
-        "Caiçara Marketing Digital Estratégico (\"Caiçara\", \"nós\") é uma agência de marketing digital com sede em Santos, São Paulo, inscrita no CNPJ sob nº [INSERIR CNPJ], que oferece serviços de estratégia, criação, performance e automação para pequenas e médias empresas.",
+        "Caiçara Marketing Digital Estratégico (\"Caiçara\", \"nós\") é uma agência de marketing digital com sede em Santos, São Paulo, inscrita no CNPJ sob nº 59.205.837/0001-10, que oferece serviços de estratégia, criação, performance e automação para pequenas e médias empresas.",
         "Este site é o nosso canal institucional. Para qualquer questão relativa a esta política, fale com o nosso encarregado de dados (DPO) pelos canais indicados no fim deste documento."
       ]},
       { h: "2. Dados que coletamos", p: [

@@ -35,7 +35,7 @@ A metodologia interna é o **PEMD**, com quatro etapas aplicadas em ordem: **Set
 
 - **Farol** (a partir de R$ 1.490/mês) — Presença. 2 redes sociais, 12 peças/mês, Perfil no Google, relatório mensal.
 - **Bússola** (a partir de R$ 2.890/mês) — Presença + Performance. Tudo do Farol, mais Google/Meta Ads, landing page, automação WhatsApp, reunião estratégica quinzenal.
-- **Timão** (sob consulta) — Operação completa. Tudo da Bússola, mais BOT Criativo, Portal Caiçara com mensageria, branding, squad dedicado.
+- **Leme** (sob consulta) — Operação completa. Tudo da Bússola, mais BOT Criativo, Portal Caiçara com mensageria, branding, squad dedicado.
 
 ## Para quem é
 
@@ -75,7 +75,7 @@ Idioma: **português do Brasil**, sempre. Termos técnicos de mercado (SEO, lead
 ## Páginas do site
 
 - `/` — Início (herói farol, números, 6 serviços, método PEMD, depoimentos, CTA)
-- `/servicos` — Catálogo filtrável por aba (Performance, Conteúdo, Marca, Automação) + 3 pacotes (Farol, Bússola, Timão)
+- `/servicos` — Catálogo filtrável por aba (Performance, Conteúdo, Marca, Automação) + 3 pacotes (Farol, Bússola, Leme)
 - `/metodo` — PEMD em 4 etapas + 3 personas + CTA
 - `/cases` — 4 cases com números e etiquetas, filtráveis
 - `/sobre` — Propósito, valores, tripulação

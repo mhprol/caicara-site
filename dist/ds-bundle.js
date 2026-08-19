@@ -5080,7 +5080,7 @@ try { (() => {
     accent: "magenta",
     featured: true
   }, {
-    name: "Timão",
+    name: "Leme",
     tag: "Operação completa",
     price: "sob consulta",
     items: ["Tudo da Bússola", "BOT Criativo configurado", "Portal Caiçara com mensageria", "Branding e identidade visual", "Squad dedicado"],
