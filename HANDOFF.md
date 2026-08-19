@@ -252,23 +252,44 @@ git push origin main --tags
 
 4 itens identificados no final da sessão. Os 3 últimos são **bugs a corrigir** na próxima iteração; o primeiro é **design spec a preservar**.
 
-### 11.1 ✨ PRESERVAR — Navbar translúcido só na home
+### 11.1 🐛 FIX — Navbar translúcido em TODAS as páginas (consistência visual)
 
-**Comportamento atual (intencional)**:
-- Na **Home**: navbar tem `background: var(--glass-bg)` (rgba 16% do sand-500) + `backdrop-filter: var(--glass-blur)` (blur 14px + saturate 1.1). Visualmente, o nav fica "flutuando" sobre o PhotoHero com efeito de vidro fosco.
-- Nas **demais páginas**: navbar tem `background: var(--surface-page)` (sand-500 sólido) + sem blur. Navbar opaca, ancorada.
+**Problema**: o efeito de vidro fosco (`glass: pageKey === "home"`) só aplica na Home. Nas demais páginas a navbar vira opaca (`var(--surface-page)` = sand-500 sólido), o que **quebra a continuidade visual** entre páginas. Não faz sentido o nav se comportar diferente conforme a rota.
 
-**Onde está no código** (`dist/site.js`, SiteNav):
+**Comportamento atual**:
+- Home: `background: var(--glass-bg)` + `backdrop-filter: var(--glass-blur)` (translúcido)
+- Demais: `background: var(--surface-page)` + sem blur (opaco)
+
+**Comportamento desejado**: glass em **todas as páginas**.
+
+**Onde mudar** (`dist/site.js`, SiteNav):
+
 ```js
-var glass = pageKey === "home";  // mount() passa pageKey via PAGE_MAP
+// ATUAL (glass só na home):
+var glass = pageKey === "home";
 ...
 background: glass ? "var(--glass-bg)" : "var(--surface-page)",
 backdropFilter: glass ? "var(--glass-blur)" : "none",
+borderBottom: "1px solid " + (glass ? "rgba(253,248,242,.18)" : "var(--border-subtle)"),
+color: glass ? "var(--sand-500)" : "var(--text-heading)",
+
+// PROPOSTO (glass sempre):
+var glass = true;
+...
+// OU, mais limpo, remover a variável `glass` e usar sempre os valores glass:
+// background: "var(--glass-bg)",
+// backdropFilter: "var(--glass-blur)",
+// borderBottom: "1px solid rgba(253,248,242,.18)",
+// color: "var(--sand-500)",
 ```
 
-A `var(--glass-bg)` e `var(--glass-blur)` vêm do Design System (src/tokens/elevation.css).
+**Atenção**:
+1. O burger button usa `color: glass ? "var(--sand-500)" : "var(--text-heading)"` — se mudar pra sempre `var(--sand-500)`, o ícone fica claro no fundo claro. **Aí entra o fix 11.2**: mudar a cor do burger pra `var(--magenta-500)` (accent brand) pra ter contraste.
+2. O nav link active (`borderBottom: "2px solid var(--magenta-500)"`) continua visível contra o fundo translúcido.
+3. A logo (SiteLogo) é renderizada com `variant: "horizontal-light"` ou `"horizontal-dark"` baseado em `glass`. Se glass for sempre true, a logo é sempre light. Isso funciona contra o fundo sand+blur (a logo clara fica visível como a do PhotoHero da home).
+4. Body padding-top continua 72px (já está).
 
-**Regra pra próxima sessão**: **NÃO ALTERAR**. Esse contraste é intencional — dá destaque à home (que é a página de captação principal) e mantém a legibilidade nas páginas internas. Se for "consertar" a opacidade das internas, estraga o efeito.
+**Verificação**: DevTools, navegar entre Home → /servicos → /metodo → /cases → /sobre → /contato. A navbar deve ter o mesmo efeito de vidro fosco em todas elas (cor clara, blur de fundo, border sutil).
 
 ---
 
@@ -358,7 +379,8 @@ Ou, mais elegante — deixar o JSX responsivo via CSS, setando no SiteLogo `styl
 node scripts/check-staging.mjs  # se commitado, ou via http request
 
 # 2. Se staging está em v1.0.5:
-#    Bump pra v1.0.6, implementar 11.2/11.3/11.4, deploy
+#    Bump pra v1.0.6, implementar 11.1/11.2/11.3/11.4, deploy
+#    11.1 e 11.2 mexem no mesmo lugar (SiteNav) — fazer juntos
 
 # 3. Bump de versão (PowerShell, mesmo padrão do v1.0.4→v1.0.5):
 #    Edite os 19 arquivos (ghl/*-HEADER.html, ghl/*-BODY.html, sitemap.xml, dist/site.js)
@@ -382,4 +404,4 @@ node --check dist/site.js
 
 ---
 
-_Fim do handoff v1.0.5. Próxima sessão: ler §11, implementar 11.2/11.3/11.4, deploy v1.0.6._
+_Fim do handoff v1.0.5. Próxima sessão: ler §11, implementar 11.1+11.2 (juntos) e 11.3+11.4, deploy v1.0.6._
